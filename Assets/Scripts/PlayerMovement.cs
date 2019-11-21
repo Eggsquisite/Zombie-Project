@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public Rigidbody2D rb;
+    public Animator anim;
 
     Vector2 movement;   // stores x (horiz) and y (vert)
 
@@ -14,6 +15,9 @@ public class PlayerMovement : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");     // value btwn -1 and 1
         movement.y = Input.GetAxisRaw("Vertical");       // works default with WASD and arrow keys
 
+        anim.SetFloat("Horizontal", movement.x);
+        anim.SetFloat("Vertical", movement.y);
+        anim.SetFloat("Speed", movement.sqrMagnitude);    // sqrMag will always be pos, optimal since sqr root is unneeded
     }
 
     // Movement
