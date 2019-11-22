@@ -56,10 +56,5 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate() {
         // Movement
         rb.MovePosition(rb.position + movement * updatedMoveSpeed * 5 * Time.fixedDeltaTime);
-
-        Vector2 lookDir = mousePos - rb.position;   // vector pointing towards mousePos
-        float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;      // Gets the correct angle of mouse position relating to player model
-        
-        
     }
 }
