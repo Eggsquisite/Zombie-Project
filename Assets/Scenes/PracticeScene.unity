@@ -12597,7 +12597,7 @@ MonoBehaviour:
   arrowPrefab: {fileID: 4593162864101900849, guid: 0761399b318730e4a8fe45c30093b742,
     type: 3}
   playerAnim: {fileID: 94664307}
-  arrowForce: 5
+  arrowForce: 2
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -12720,7 +12720,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 767034804}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.051, y: -1.001, z: 0}
+  m_LocalPosition: {x: 0, y: -1.052, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 94664304}

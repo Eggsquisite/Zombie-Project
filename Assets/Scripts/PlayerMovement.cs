@@ -22,32 +22,32 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         // Movement inputs
-        movement.x = Input.GetAxisRaw("Horizontal");     // value btwn -1 and 1
-        movement.y = Input.GetAxisRaw("Vertical");       // works default with WASD and arrow keys
+        movement.x = Input.GetAxisRaw("Horizontal");        // value btwn -1 and 1
+        movement.y = Input.GetAxisRaw("Vertical");          // works default with WASD and arrow keys
 
-        anim.SetFloat("Horizontal", movement.x);
-        anim.SetFloat("Vertical", movement.y);
-        anim.SetFloat("Base Speed", updatedMoveSpeed);
-        anim.SetFloat("Speed", movement.sqrMagnitude);    // sqrMag will always be pos, optimal since sqr root is unneeded
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift))            // press and hold shift to move faster
             updatedMoveSpeed = baseMoveSpeed * 1.25f;
         else if (Input.GetKeyUp(KeyCode.LeftShift))
             updatedMoveSpeed = baseMoveSpeed;
 
+        anim.SetFloat("Horizontal", movement.x);
+        anim.SetFloat("Vertical", movement.y);
+        anim.SetFloat("Base Speed", updatedMoveSpeed);
+        anim.SetFloat("Speed", movement.sqrMagnitude);      // sqrMag will always be pos, optimal since sqr root is unneeded
+
         mousePos = myCamera.ScreenToWorldPoint(Input.mousePosition);
 
         if (mousePos.x <= rb.position.x - 1)
-            anim.SetFloat("Facing Horizontal", -1);     // mouse is pointed LEFT, aim LEFT
+            anim.SetFloat("Facing Horizontal", -1);         // mouse is pointed LEFT, aim LEFT
         else if (mousePos.x > rb.position.x + 1)
-            anim.SetFloat("Facing Horizontal", 1);      // mouse is pointed RIGHT, aim RIGHT
+            anim.SetFloat("Facing Horizontal", 1);          // mouse is pointed RIGHT, aim RIGHT
         else
             anim.SetFloat("Facing Horizontal", 0);
 
         if (mousePos.y > rb.position.y + 1)
-            anim.SetFloat("Facing Vertical", 1);        // mouse is pointed UP, aim UP
+            anim.SetFloat("Facing Vertical", 1);            // mouse is pointed UP, aim UP
         else if (mousePos.y <= rb.position.y - 2)
-            anim.SetFloat("Facing Vertical", -1);       // mouse is pointed DOWN, aim DOWN
+            anim.SetFloat("Facing Vertical", -1);           // mouse is pointed DOWN, aim DOWN
         else
             anim.SetFloat("Facing Vertical", 0);
     }
