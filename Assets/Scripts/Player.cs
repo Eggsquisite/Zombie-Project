@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
 
     Coroutine firingCoroutine;
     private bool alive = true;
+    private bool lockAnimation = false;
+    private bool aiming = false;
     private float updatedMoveSpeed;
 
     Vector2 movement;   // stores x (horiz) and y (vert)
@@ -38,32 +40,37 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift))            // press and hold shift to move faster
             updatedMoveSpeed = 0f;
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        else if (aiming == true)
+            updatedMoveSpeed = baseMoveSpeed * 0.5f;
+        else if (Input.GetKeyUp(KeyCode.LeftShift) || aiming == false)
             updatedMoveSpeed = baseMoveSpeed;
 
         anim.SetFloat("Base Speed", updatedMoveSpeed);
         anim.SetFloat("Speed", movement.sqrMagnitude);      // sqrMag will always be pos, optimal since sqr root is unneeded
 
-        if (movement.x >= 1)
+        if (!lockAnimation)
         {
-            anim.SetFloat("Horizontal", 1);
-            anim.SetFloat("Vertical", 0);
-        }
-        else if (movement.x < 0)
-        {
-            anim.SetFloat("Horizontal", -1);
-            anim.SetFloat("Vertical", 0);
-        }
+            if (movement.x >= 1)
+            {
+                anim.SetFloat("Horizontal", 1);
+                anim.SetFloat("Vertical", 0);
+            }
+            else if (movement.x < 0)
+            {
+                anim.SetFloat("Horizontal", -1);
+                anim.SetFloat("Vertical", 0);
+            }
 
-        if (movement.y >= 1)
-        {
-            anim.SetFloat("Vertical", 1);
-            anim.SetFloat("Horizontal", 0);
-        }
-        else if (movement.y < 0)
-        {
-            anim.SetFloat("Vertical", -1);
-            anim.SetFloat("Horizontal", 0);
+            if (movement.y >= 1)
+            {
+                anim.SetFloat("Vertical", 1);
+                anim.SetFloat("Horizontal", 0);
+            }
+            else if (movement.y < 0)
+            {
+                anim.SetFloat("Vertical", -1);
+                anim.SetFloat("Horizontal", 0);
+            }
         }
     }
 
@@ -72,10 +79,18 @@ public class Player : MonoBehaviour
         if (alive)
         {
             if (Input.GetButtonDown("Fire1"))
-                firingCoroutine = StartCoroutine(Fire());
-
-            if (Input.GetButtonUp("Fire1"))
-                StopCoroutine(firingCoroutine);
+            {
+                //firingCoroutine = StartCoroutine(Fire());
+                anim.SetBool("Shoot", true);
+                aiming = true;
+            }
+            else if (Input.GetButtonUp("Fire1"))
+            { 
+                //StopCoroutine(firingCoroutine);
+                anim.SetBool("Shoot", false);
+                aiming = false;
+            }
+                
         }
         else
             StopCoroutine(firingCoroutine);
@@ -84,7 +99,10 @@ public class Player : MonoBehaviour
     IEnumerator Fire()
     {
         anim.SetBool("Shoot", true);
-        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length + anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
+
+        //yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length + anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        yield return new WaitForSeconds(0.5f);
+
         anim.SetBool("Shoot", false);
     }
 
