@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
         movement.y = Input.GetAxisRaw("Vertical");          // works default with WASD and arrow keys
 
         if (Input.GetKeyDown(KeyCode.LeftShift))            // press and hold shift to move faster
-            updatedMoveSpeed = baseMoveSpeed * 1.25f;
+            updatedMoveSpeed = baseMoveSpeed * 0f;
         else if (Input.GetKeyUp(KeyCode.LeftShift))
             updatedMoveSpeed = baseMoveSpeed;
 
@@ -35,21 +35,28 @@ public class PlayerMovement : MonoBehaviour
         anim.SetFloat("Base Speed", updatedMoveSpeed);
         anim.SetFloat("Speed", movement.sqrMagnitude);      // sqrMag will always be pos, optimal since sqr root is unneeded
 
-        mousePos = myCamera.ScreenToWorldPoint(Input.mousePosition);
-
-        if (mousePos.x <= rb.position.x - 1)
-            anim.SetFloat("Facing Horizontal", -1);         // mouse is pointed LEFT, aim LEFT
-        else if (mousePos.x > rb.position.x + 1)
-            anim.SetFloat("Facing Horizontal", 1);          // mouse is pointed RIGHT, aim RIGHT
-        else
-            anim.SetFloat("Facing Horizontal", 0);
-
-        if (mousePos.y > rb.position.y + 1)
-            anim.SetFloat("Facing Vertical", 1);            // mouse is pointed UP, aim UP
-        else if (mousePos.y <= rb.position.y - 2)
-            anim.SetFloat("Facing Vertical", -1);           // mouse is pointed DOWN, aim DOWN
-        else
+        if (movement.x >= 1)
+        {
+            anim.SetFloat("Facing Horizontal", 1);
             anim.SetFloat("Facing Vertical", 0);
+        }
+        else if (movement.x < 0)
+        {
+            anim.SetFloat("Facing Horizontal", -1);
+            anim.SetFloat("Facing Vertical", 0);
+        }
+
+        if (movement.y >= 1)
+        {
+            anim.SetFloat("Facing Vertical", 1);
+            anim.SetFloat("Facing Horizontal", 0);
+        }
+        else if (movement.y < 0)
+        {
+            anim.SetFloat("Facing Vertical", -1);
+            anim.SetFloat("Facing Horizontal", 0);
+        }
+
     }
 
     // Movement
