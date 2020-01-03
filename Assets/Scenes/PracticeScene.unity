@@ -12427,7 +12427,6 @@ GameObject:
   - component: {fileID: 94664305}
   - component: {fileID: 94664307}
   - component: {fileID: 94664308}
-  - component: {fileID: 94664309}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -12523,7 +12522,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 94664302}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -12581,23 +12580,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5833938, y: 1.1415882}
   m_EdgeRadius: 0
---- !u!114 &94664309
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 94664302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 473b59f68c44d194497e2a42e511d064, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firePoint: {fileID: 767034805}
-  arrowPrefab: {fileID: 4593162864101900849, guid: 0761399b318730e4a8fe45c30093b742,
-    type: 3}
-  playerAnim: {fileID: 94664307}
-  arrowForce: 2
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

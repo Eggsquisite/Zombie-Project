@@ -12,13 +12,11 @@ public class CameraMovement : MonoBehaviour
 
     public float smoothTime = .15f;         // time to follow target
 
-    
-
     void FixedUpdate()
     {
         targetPos = target.position;            // target position
         targetPos.z = transform.position.z;     // align camera and targets z position
 
-        transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
+        transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime * Time.deltaTime);
     }
 }
