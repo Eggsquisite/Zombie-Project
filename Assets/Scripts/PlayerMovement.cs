@@ -30,31 +30,31 @@ public class PlayerMovement : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.LeftShift))
             updatedMoveSpeed = baseMoveSpeed;
 
-        anim.SetFloat("Horizontal", movement.x);
-        anim.SetFloat("Vertical", movement.y);
+        //anim.SetFloat("Horizontal", movement.x);
+        //anim.SetFloat("Vertical", movement.y);
         anim.SetFloat("Base Speed", updatedMoveSpeed);
         anim.SetFloat("Speed", movement.sqrMagnitude);      // sqrMag will always be pos, optimal since sqr root is unneeded
 
         if (movement.x >= 1)
         {
-            anim.SetFloat("Facing Horizontal", 1);
-            anim.SetFloat("Facing Vertical", 0);
+            anim.SetFloat("Horizontal", 1);
+            anim.SetFloat("Vertical", 0);
         }
         else if (movement.x < 0)
         {
-            anim.SetFloat("Facing Horizontal", -1);
-            anim.SetFloat("Facing Vertical", 0);
+            anim.SetFloat("Horizontal", -1);
+            anim.SetFloat("Vertical", 0);
         }
 
         if (movement.y >= 1)
         {
-            anim.SetFloat("Facing Vertical", 1);
-            anim.SetFloat("Facing Horizontal", 0);
+            anim.SetFloat("Vertical", 1);
+            anim.SetFloat("Horizontal", 0);
         }
         else if (movement.y < 0)
         {
-            anim.SetFloat("Facing Vertical", -1);
-            anim.SetFloat("Facing Horizontal", 0);
+            anim.SetFloat("Vertical", -1);
+            anim.SetFloat("Horizontal", 0);
         }
 
     }
