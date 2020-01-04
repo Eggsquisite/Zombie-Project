@@ -263,7 +263,15 @@ MonoBehaviour:
   - {fileID: 1472619892}
   - {fileID: 560424839}
   - {fileID: 963714673}
+  health: 200
   baseMoveSpeed: 1
+  deathVFX: {fileID: 7181404978213084285, guid: 102db64b3ea50364c818a9d6bbe928f7,
+    type: 3}
+  deathSFX: {fileID: 0}
+  durationOfDeath: 1
+  gracePeriod: 1
+  spriteBlinkMiniDuration: 0.5
+  spriteBlinkTotalDuration: 1
 --- !u!1 &1271564910112366547
 GameObject:
   m_ObjectHideFlags: 0

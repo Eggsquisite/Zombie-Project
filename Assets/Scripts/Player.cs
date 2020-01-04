@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] float baseMoveSpeed;
     [SerializeField] GameObject deathVFX;
     [SerializeField] AudioClip deathSFX;
-    [SerializeField] float durationOfDeath = 1f;
+    [SerializeField] float durationOfDeath = 3f;
 
     [Header("Sprite Blink")]
     [SerializeField] float gracePeriod = 1f;
@@ -146,7 +146,6 @@ public class Player : MonoBehaviour
         if (damageDealer != null)
         {
             Damage(damageDealer.GetDamage());
-            Destroy(other.gameObject);
         }
     }
 
@@ -165,7 +164,7 @@ public class Player : MonoBehaviour
         alive = false;
         Destroy(gameObject);
         //AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, hurtVolume);
-        GameObject explosion = Instantiate(deathVFX, transform.position, transform.rotation);
+        GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.Euler(0f, 180f, 0f));
         Destroy(explosion, durationOfDeath);
         //FindObjectOfType<Level>().LoadGameOver();
     }
