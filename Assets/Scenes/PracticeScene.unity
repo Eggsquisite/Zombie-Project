@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 15221507}
   - component: {fileID: 15221509}
   - component: {fileID: 15221508}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Tilemap_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12529,7 +12529,7 @@ GameObject:
   - component: {fileID: 976319446}
   - component: {fileID: 976319445}
   - component: {fileID: 976319447}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Tilemap_Trees
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20394,7 +20394,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1013495619}
   - component: {fileID: 1013495618}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20495,6 +20495,18 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 560424839, guid: e2d0109f196350949adb963bce1f99c9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 963714673, guid: e2d0109f196350949adb963bce1f99c9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 963714673, guid: e2d0109f196350949adb963bce1f99c9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2d0109f196350949adb963bce1f99c9, type: 3}

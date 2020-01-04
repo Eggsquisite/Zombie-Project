@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4593162864101900815}
   - component: {fileID: 4593162864101900814}
   - component: {fileID: 7784169991840065957}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arrow
   m_TagString: Projectile
   m_Icon: {fileID: 0}
@@ -142,7 +142,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68ef1bb481677140a3aa8baf93c62ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitEffect: {fileID: 0}
-  speed: 500
-  projectileFreq: 0.25
-  rb: {fileID: 4593162864101900815}
+  speed: 1000
+  destroyWait: 3

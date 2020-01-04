@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift))                // press and hold shift to move faster
             updatedMoveSpeed = 0f;
         else if (aiming)
-            updatedMoveSpeed = baseMoveSpeed * 0.5f;
+            updatedMoveSpeed = baseMoveSpeed * 0f;
         else 
             updatedMoveSpeed = baseMoveSpeed;
 

@@ -4,17 +4,26 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
-    [SerializeField] GameObject hitEffect;
     [SerializeField] float speed = 500f;
+    [SerializeField] float destroyWait = 5f;
+    
     Rigidbody2D rb;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = transform.up * speed * Time.deltaTime;
+        StartCoroutine(Remove());
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D coll)
     {
-        //Destroy(gameObject);
+        if (coll.gameObject != null)
+            Destroy(gameObject);
+    }
+
+    IEnumerator Remove()
+    {
+        yield return new WaitForSeconds(destroyWait);
+        Destroy(gameObject);
     }
 }

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 560424839}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FirePoint Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 963714673}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FirePoint Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1472619892}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FirePoint Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 1271564909439953940}
   - component: {fileID: 1271564909439953939}
   - component: {fileID: 1271564909439953942}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -273,7 +273,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1271564910112366546}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FirePoint Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
