@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    Rigidbody2D rb;
-    Animator anim;
     [SerializeField] GameObject projectile;
     [SerializeField] List<Transform> firePoints;
-    [SerializeField] float baseMoveSpeed, rotation;
+    [SerializeField] float baseMoveSpeed;
 
-
+    Rigidbody2D rb;
+    Animator anim;
     private bool alive = true;
     private bool aiming = false;
-    private float updatedMoveSpeed;
+    private float updatedMoveSpeed, rotation;
 
     Vector2 movement;   // stores x (horiz) and y (vert)
 

@@ -20496,45 +20496,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1271564909439953942, guid: e2d0109f196350949adb963bce1f99c9,
-        type: 3}
-      propertyPath: projectile.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1271564909439953942, guid: e2d0109f196350949adb963bce1f99c9,
-        type: 3}
-      propertyPath: projectile.Array.data[0]
-      value: 
-      objectReference: {fileID: 563370130797154200, guid: d228e00b007011c4b8a20e243f2cbc07,
-        type: 3}
-    - target: {fileID: 1271564909439953942, guid: e2d0109f196350949adb963bce1f99c9,
-        type: 3}
-      propertyPath: projectile.Array.data[1]
-      value: 
-      objectReference: {fileID: 3755113053332848804, guid: ccdafaf77429a914d9ffc79266980d20,
-        type: 3}
-    - target: {fileID: 1271564909439953942, guid: e2d0109f196350949adb963bce1f99c9,
-        type: 3}
-      propertyPath: projectile.Array.data[2]
-      value: 
-      objectReference: {fileID: 821418155029621375, guid: 340ea408e7cb1d946984eed15d4da83d,
-        type: 3}
-    - target: {fileID: 1271564909439953942, guid: e2d0109f196350949adb963bce1f99c9,
-        type: 3}
-      propertyPath: projectile.Array.data[3]
-      value: 
-      objectReference: {fileID: 7548521126458682947, guid: 1156b978822a8f7478dee66e9c67ee87,
-        type: 3}
-    - target: {fileID: 1271564909439953942, guid: e2d0109f196350949adb963bce1f99c9,
-        type: 3}
-      propertyPath: projectile
-      value: 
-      objectReference: {fileID: 4593162864101900849, guid: 0761399b318730e4a8fe45c30093b742,
-        type: 3}
-    - target: {fileID: 1271564909439953942, guid: e2d0109f196350949adb963bce1f99c9,
-        type: 3}
-      propertyPath: projectileSpeed
-      value: 50
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2d0109f196350949adb963bce1f99c9, type: 3}
