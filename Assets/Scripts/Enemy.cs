@@ -19,7 +19,15 @@ public class Enemy : MonoBehaviour
             player = true;
     }
 
-    // Update is called once per frame
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
+        if (damageDealer != null)
+        {
+            Damage(damageDealer.GetDamage());
+        }
+    }
+
     public void Damage(int dmg)
     {
         health -= dmg;
