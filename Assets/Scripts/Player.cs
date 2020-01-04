@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] List<Transform> firePoints;
     [SerializeField] float projectileSpeed = 5f;
     [SerializeField] float projectileFreq = 0.25f;
-    [SerializeField] float baseMoveSpeed;
+    [SerializeField] float baseMoveSpeed, rotation;
 
 
     private bool alive = true;
@@ -81,13 +81,22 @@ public class Player : MonoBehaviour
     public void Fire(int facing)
     {
         anim.SetBool("Shoot", false);
+        if (facing == 0)
+            rotation = 90f;
+        else if (facing == 1)
+            rotation = -90f;
+        else if (facing == 2)
+            rotation = 180f;
+        else if (facing == 3)
+            rotation = -180f;
+
         GameObject newArrow = Instantiate(
             projectile,
             firePoints[facing].position,
-            Quaternion.identity) as GameObject;
+            Quaternion.Euler(0f, 0f, rotation)) as GameObject;
 
-        arrowMovement.x = anim.GetFloat("Horizontal");
-        arrowMovement.y = anim.GetFloat("Vertical");
+        arrowMovement.x = Mathf.Abs(anim.GetFloat("Horizontal"));
+        arrowMovement.y = Mathf.Abs(anim.GetFloat("Vertical"));
 
         Rigidbody2D rbArrow = newArrow.GetComponent<Rigidbody2D>();
         rbArrow.MovePosition(rbArrow.position + arrowMovement * projectileSpeed * 5 * Time.fixedDeltaTime);
