@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
-    public GameObject hitEffect;
+    [SerializeField] GameObject hitEffect;
+    [SerializeField] float speed = 500f;
+    Rigidbody2D rb;
 
     private void Start()
     {
-        //Vector2 aimDir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        //float angle = Mathf.Atan2(aimDir.y, aimDir.x) * Mathf.Rad2Deg - 90f;      // Gets the correct angle of mouse position relating to player model
-
-        //transform.rotation = Quaternion.Euler(0, 0, angle);
+        rb = GetComponent<Rigidbody2D>();
+        rb.velocity = transform.up * speed * Time.deltaTime;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {

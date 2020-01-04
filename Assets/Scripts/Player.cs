@@ -4,23 +4,25 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] Rigidbody2D rb;
-    [SerializeField] Animator anim;
+    Rigidbody2D rb;
+    Animator anim;
     [SerializeField] GameObject projectile;
     [SerializeField] List<Transform> firePoints;
-    [SerializeField] float projectileSpeed = 5f;
-    [SerializeField] float projectileFreq = 0.25f;
     [SerializeField] float baseMoveSpeed, rotation;
 
 
     private bool alive = true;
+    private bool aiming = false;
     private float updatedMoveSpeed;
 
-    Vector2 movement, arrowMovement;   // stores x (horiz) and y (vert)
+    Vector2 movement;   // stores x (horiz) and y (vert)
 
-    private void Start()
+    private void Awake()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+
+        anim.SetFloat("Horizontal", 1);
         updatedMoveSpeed = baseMoveSpeed;
     }
 
@@ -36,9 +38,11 @@ public class Player : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");        // value btwn -1 and 1
         movement.y = Input.GetAxisRaw("Vertical");          // works default with WASD and arrow keys
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))            // press and hold shift to move faster
+        if (Input.GetKey(KeyCode.LeftShift))                // press and hold shift to move faster
             updatedMoveSpeed = 0f;
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        else if (aiming)
+            updatedMoveSpeed = baseMoveSpeed * 0.5f;
+        else 
             updatedMoveSpeed = baseMoveSpeed;
 
         anim.SetFloat("Base Speed", updatedMoveSpeed);
@@ -71,8 +75,9 @@ public class Player : MonoBehaviour
     {
         if (alive)
         {
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown("Fire1") && aiming == false)
             {
+                aiming = true;
                 anim.SetBool("Shoot", true);
             }
         }
@@ -80,26 +85,22 @@ public class Player : MonoBehaviour
 
     public void Fire(int facing)
     {
+        aiming = false;
         anim.SetBool("Shoot", false);
-        if (facing == 0)
-            rotation = 90f;
-        else if (facing == 1)
-            rotation = -90f;
-        else if (facing == 2)
-            rotation = 180f;
-        else if (facing == 3)
-            rotation = -180f;
 
-        GameObject newArrow = Instantiate(
+        if (facing == 0)
+            rotation = 180f;
+        else if (facing == 1)
+            rotation = 0f;
+        else if (facing == 2)
+            rotation = -90f;
+        else if (facing == 3)
+            rotation = 90f;
+
+        Instantiate(
             projectile,
             firePoints[facing].position,
-            Quaternion.Euler(0f, 0f, rotation)) as GameObject;
-
-        arrowMovement.x = Mathf.Abs(anim.GetFloat("Horizontal"));
-        arrowMovement.y = Mathf.Abs(anim.GetFloat("Vertical"));
-
-        Rigidbody2D rbArrow = newArrow.GetComponent<Rigidbody2D>();
-        rbArrow.MovePosition(rbArrow.position + arrowMovement * projectileSpeed * 5 * Time.fixedDeltaTime);
+            Quaternion.Euler(0f, 0f, rotation));
     }
 
 
