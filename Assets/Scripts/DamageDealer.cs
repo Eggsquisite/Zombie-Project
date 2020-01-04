@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class DamageDealer : MonoBehaviour
 {
-    [SerializeField] float damage = 50f;
+    [SerializeField] int damage = 100;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public int GetDamage()
     {
-        if (collision.gameObject != null)
-            collision.GetComponent<Health>().Damage(damage);
+        return damage;
+    }
+
+    public void Hit()
+    {
+        Destroy(gameObject);
     }
 }

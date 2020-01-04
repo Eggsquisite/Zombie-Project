@@ -2,21 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
-    [SerializeField] float health = 200f;
+    [SerializeField] int health = 200;
     [SerializeField] float deathWait = 1f;
+
     Animator anim;
     Collider2D m_Collider;
+    private bool player = false;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
         m_Collider = GetComponent<BoxCollider2D>();
+        if (GetComponent<Player>())
+            player = true;
     }
 
     // Update is called once per frame
-    public void Damage(float dmg)
+    public void Damage(int dmg)
     {
         health -= dmg;
         if (health <= 0)

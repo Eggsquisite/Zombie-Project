@@ -2,14 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Player : MonoBehaviour
 {
     [SerializeField] GameObject projectile;
     [SerializeField] List<Transform> firePoints;
+    [SerializeField] float health = 200f;
     [SerializeField] float baseMoveSpeed;
+    [SerializeField] GameObject deathVFX;
+    [SerializeField] AudioClip deathSFX;
+    [SerializeField] float durationOfDeath = 1f;
+
+    [Header("Sprite Blink")]
+    [SerializeField] float gracePeriod = 1f;
+    [SerializeField] float spriteBlinkMiniDuration = 0.1f;
+    [SerializeField] float spriteBlinkTotalDuration = 1.0f;
+    private float spriteBlinkTimer = 0.0f;
+    private float spriteBlinkTotalTimer = 0.0f;
 
     Rigidbody2D rb;
     Animator anim;
+    SpriteRenderer sp;
     private bool alive = true;
     private bool aiming = false;
     private float updatedMoveSpeed, rotation;
@@ -20,6 +33,7 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        sp = GetComponent<SpriteRenderer>();
 
         anim.SetFloat("Horizontal", 1);
         updatedMoveSpeed = baseMoveSpeed;
@@ -102,6 +116,59 @@ public class Player : MonoBehaviour
             Quaternion.Euler(0f, 0f, rotation));
     }
 
+    public void GracePeriod()
+    {
+        Debug.Log("Hit");
+        spriteBlinkTotalTimer += Time.deltaTime;
+        if (spriteBlinkTotalTimer >= spriteBlinkTotalDuration)
+        {
+            spriteBlinkTotalTimer = 0.0f;
+            sp.enabled = true;
+
+            return;
+        }
+
+        spriteBlinkTimer += Time.deltaTime;
+        if (spriteBlinkTimer >= spriteBlinkMiniDuration)
+        {
+            spriteBlinkTimer = 0.0f;
+            if (sp.enabled)
+                sp.enabled = false;
+            else
+                sp.enabled = true;
+        }
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
+        if (damageDealer != null)
+        {
+            Damage(damageDealer.GetDamage());
+            Destroy(other.gameObject);
+        }
+    }
+
+    public void Damage(int damageDealt)
+    {
+        health -= damageDealt;
+        if (health > 0)
+            return;
+        //AudioSource.PlayClipAtPoint(hurtSFX, Camera.main.transform.position, hurtVolume);
+        else
+            Death();
+    }
+
+    private void Death()
+    {
+        alive = false;
+        Destroy(gameObject);
+        //AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, hurtVolume);
+        GameObject explosion = Instantiate(deathVFX, transform.position, transform.rotation);
+        Destroy(explosion, durationOfDeath);
+        //FindObjectOfType<Level>().LoadGameOver();
+    }
 
     // Movement
     void FixedUpdate() {
