@@ -8,6 +8,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] float hitWait = 0.1f;
     [SerializeField] float deathWait = 1f;
 
+    [SerializeField] AudioClip hurtSFX = null;
+    [SerializeField] AudioClip deathSFX = null;
+    [Range(0, 1)] [SerializeField] float enemyVolume = 1f;
+
     Animator anim = null;
     Collider2D m_Collider = null;
 
@@ -41,6 +45,7 @@ public class Enemy : MonoBehaviour
     {
         anim.SetBool("Death", true);
         m_Collider.enabled = !m_Collider.enabled;
+        AudioSource.PlayClipAtPoint(deathSFX, transform.position, enemyVolume);
         Destroy(gameObject, deathWait);
     }
 

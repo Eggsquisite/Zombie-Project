@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField] List<AudioClip> hurtSFX = null;
     [SerializeField] float durationOfDeath = 3f;
     [Range(0,1)] [SerializeField] float hurtVolume = 1f;
+    [SerializeField] int facing = -1;
 
     [Header("Sprite Blink")]
     [SerializeField] float spriteBlinkMiniDuration = 0.1f;
@@ -25,20 +26,21 @@ public class Player : MonoBehaviour
     private float spriteBlinkTimer = 0.0f;
     private float spriteBlinkTotalTimer = 0.0f;
 
+    [Header("Dash")]
+    [SerializeField] float dashTimer = 3f;
+    [SerializeField] float maxDash = 20f;
+    [SerializeField] float dashSpeed = 10f;
+    public DashState dashState;
+
     Rigidbody2D rb;
     Animator anim;
+    AudioSource aud;
     SpriteRenderer sp;
     private bool alive = true;
     private bool aiming = false;
     private bool playerHit = false;
     private bool dash = true;
     private float updatedMoveSpeed, rotation;
-    [SerializeField] int facing = -1;
-    [SerializeField] float dashTimer = 3f;
-    [SerializeField] float maxDash = 20f;
-    [SerializeField] float dashSpeed = 10f;
-    public DashState dashState;
-    
 
     Vector2 movement, savedVelocity;   // stores x (horiz) and y (vert)
 
@@ -53,6 +55,7 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        aud = FindObjectOfType<AudioSource>();
         sp = GetComponent<SpriteRenderer>();
 
         anim.SetFloat("Horizontal", 1);
@@ -180,7 +183,7 @@ public class Player : MonoBehaviour
         {
             if (Input.GetButton("Fire1") && aiming == false)
             {
-                anim.SetBool("Attack", true);
+                //anim.SetBool("Attack", true);
             }
         }
     }
@@ -270,6 +273,7 @@ public class Player : MonoBehaviour
     private void Death()
     {
         alive = false;
+        aud.Stop();
         AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, hurtVolume);
         Destroy(gameObject);
         GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.Euler(0f, 180f, 0f));

@@ -144,6 +144,9 @@ MonoBehaviour:
   health: 50
   hitWait: 0.1
   deathWait: 5
+  hurtSFX: {fileID: 0}
+  deathSFX: {fileID: 8300000, guid: 1213b82ed9b2640ed824a6eb4fa828cc, type: 3}
+  enemyVolume: 0.5
 --- !u!114 &9116161538375515141
 MonoBehaviour:
   m_ObjectHideFlags: 0
