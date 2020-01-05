@@ -34,18 +34,17 @@ public class Enemy : MonoBehaviour
         health -= dmg;
 
         if (health <= 0)
-            StartCoroutine(Death());
+            Death();
         else
             StartCoroutine(Hit());
         
     }
 
-    IEnumerator Death()
+    private void Death()
     {
         anim.SetBool("Death", true);
         m_Collider.enabled = !m_Collider.enabled;
-        yield return new WaitForSeconds(deathWait);
-        //Destroy(gameObject);
+        Destroy(gameObject, deathWait);
     }
 
     IEnumerator Hit()

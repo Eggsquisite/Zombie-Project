@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     private bool aiming = false;
     private bool playerHit = false;
     private float updatedMoveSpeed, rotation;
+    [SerializeField] int facing = -1;
 
     Vector2 movement;   // stores x (horiz) and y (vert)
 
@@ -46,8 +47,12 @@ public class Player : MonoBehaviour
     {
         Move();
         ReadyFire();
+        Fire();
         if (playerHit)
             GracePeriod();
+
+        if (facing >= 0)
+            Debug.Log("Ready!");
     }
 
     private void Move()
@@ -93,32 +98,48 @@ public class Player : MonoBehaviour
     {
         if (alive)
         {
-            if (Input.GetButtonDown("Fire1") && aiming == false)
+            if (Input.GetButton("Fire2") && aiming == false)
             {
                 aiming = true;
                 anim.SetBool("Shoot", true);
             }
+            else if (Input.GetButtonUp("Fire2"))
+            {
+                facing = -1;
+                aiming = false;
+                anim.SetBool("Shoot", false);
+            }
         }
     }
 
-    public void Fire(int facing)
+    public void SetFire(int rotation)
     {
-        aiming = false;
-        anim.SetBool("Shoot", false);
+        facing = rotation;
+    }
 
-        if (facing == 0)
-            rotation = 180f;
-        else if (facing == 1)
-            rotation = 0f;
-        else if (facing == 2)
-            rotation = -90f;
-        else if (facing == 3)
-            rotation = 90f;
+    public void Fire()
+    {
+        if (Input.GetButton("Fire1") && aiming == true && facing >= 0)
+        {
+            aiming = false;
+            anim.SetBool("Shoot", false);
 
-        Instantiate(
-            projectile,
-            firePoints[facing].position,
-            Quaternion.Euler(0f, 0f, rotation));
+            if (facing == 0)
+                rotation = 180f;
+            else if (facing == 1)
+                rotation = 0f;
+            else if (facing == 2)
+                rotation = -90f;
+            else if (facing == 3)
+                rotation = 90f;
+
+            Instantiate(
+                projectile,
+                firePoints[facing].position,
+                Quaternion.Euler(0f, 0f, rotation));
+
+            facing = -1;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)

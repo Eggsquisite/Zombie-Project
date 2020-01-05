@@ -275,6 +275,7 @@ MonoBehaviour:
   hurtVolume: 1
   spriteBlinkMiniDuration: 0.1
   spriteBlinkTotalDuration: 1.2
+  facing: -1
 --- !u!1 &1271564910112366547
 GameObject:
   m_ObjectHideFlags: 0
