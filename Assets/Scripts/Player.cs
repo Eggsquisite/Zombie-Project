@@ -71,26 +71,42 @@ public class Player : MonoBehaviour
         anim.SetFloat("Base Speed", updatedMoveSpeed);
         anim.SetFloat("Speed", movement.sqrMagnitude);      // sqrMag will always be pos, optimal since sqr root is unneeded
 
-        if (movement.x >= 1)
-        {
-            anim.SetFloat("Horizontal", 1);
-            anim.SetFloat("Vertical", 0);
-        }
-        else if (movement.x < 0)
-        {
-            anim.SetFloat("Horizontal", -1);
-            anim.SetFloat("Vertical", 0);
-        }
-
         if (movement.y >= 1)
         {
+            // facing/moving UP
+            if (aiming && facing >= 0)
+                facing = 1;
+
             anim.SetFloat("Vertical", 1);
             anim.SetFloat("Horizontal", 0);
         }
         else if (movement.y < 0)
         {
+            // facing/moving DOWN
+            if (aiming && facing >= 0)
+                facing = 0;
+
             anim.SetFloat("Vertical", -1);
             anim.SetFloat("Horizontal", 0);
+        }
+
+        if (movement.x >= 1)
+        {
+            // facing/moving RIGHT
+            if (aiming && facing >= 0)
+                facing = 2;
+
+            anim.SetFloat("Horizontal", 1);
+            anim.SetFloat("Vertical", 0);
+        }
+        else if (movement.x < 0)
+        {
+            // facing/moving LEFT
+            if (aiming && facing >= 0)
+                facing = 3;
+
+            anim.SetFloat("Horizontal", -1);
+            anim.SetFloat("Vertical", 0);
         }
     }
 
