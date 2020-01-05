@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,11 +11,11 @@ public class Player : MonoBehaviour
     [SerializeField] float baseMoveSpeed;
     [SerializeField] GameObject deathVFX;
     [SerializeField] AudioClip deathSFX;
+    [SerializeField] List<AudioClip> hurtSFX;
     [SerializeField] float durationOfDeath = 3f;
-    [Range(0,1)] [SerializeField] float deathVolume = 1f;
+    [Range(0,1)] [SerializeField] float hurtVolume = 1f;
 
     [Header("Sprite Blink")]
-    [SerializeField] float gracePeriod = 1f;
     [SerializeField] float spriteBlinkMiniDuration = 0.1f;
     [SerializeField] float spriteBlinkTotalDuration = 1.0f;
     private float spriteBlinkTimer = 0.0f;
@@ -27,6 +26,7 @@ public class Player : MonoBehaviour
     SpriteRenderer sp;
     private bool alive = true;
     private bool aiming = false;
+    private bool playerHit = false;
     private float updatedMoveSpeed, rotation;
 
     Vector2 movement;   // stores x (horiz) and y (vert)
@@ -46,6 +46,8 @@ public class Player : MonoBehaviour
     {
         Move();
         ReadyFire();
+        if (playerHit)
+            GracePeriod();
     }
 
     private void Move()
@@ -119,34 +121,10 @@ public class Player : MonoBehaviour
             Quaternion.Euler(0f, 0f, rotation));
     }
 
-    public void GracePeriod()
-    {
-        Debug.Log("Hit");
-        spriteBlinkTotalTimer += Time.deltaTime;
-        if (spriteBlinkTotalTimer >= spriteBlinkTotalDuration)
-        {
-            spriteBlinkTotalTimer = 0.0f;
-            sp.enabled = true;
-
-            return;
-        }
-
-        spriteBlinkTimer += Time.deltaTime;
-        if (spriteBlinkTimer >= spriteBlinkMiniDuration)
-        {
-            spriteBlinkTimer = 0.0f;
-            if (sp.enabled)
-                sp.enabled = false;
-            else
-                sp.enabled = true;
-        }
-
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
-        if (damageDealer != null)
+        if (damageDealer != null && playerHit == false)
         {
             Damage(damageDealer.GetDamage());
         }
@@ -156,16 +134,44 @@ public class Player : MonoBehaviour
     {
         health -= damageDealt;
         if (health > 0)
-            return;
-        //AudioSource.PlayClipAtPoint(hurtSFX, Camera.main.transform.position, hurtVolume);
+        {
+            playerHit = true;
+            AudioSource.PlayClipAtPoint(hurtSFX[Random.Range(0, hurtSFX.Count)], Camera.main.transform.position, hurtVolume);
+        }
         else
             Death();
+    }
+
+    private void GracePeriod()
+    {
+        Debug.Log("Hit");
+
+        spriteBlinkTotalTimer += Time.deltaTime;
+        if (spriteBlinkTotalTimer >= spriteBlinkTotalDuration)
+        {
+            spriteBlinkTotalTimer = 0.0f;
+            sp.enabled = true;
+
+            playerHit = false;
+            return;
+        }
+
+        // Flicker sprite
+        spriteBlinkTimer += Time.deltaTime;
+        if (spriteBlinkTimer >= spriteBlinkMiniDuration)
+        {
+            spriteBlinkTimer = 0.0f;
+            if (sp.enabled)
+                sp.enabled = false;
+            else
+                sp.enabled = true;
+        }
     }
 
     private void Death()
     {
         alive = false;
-        AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathVolume);
+        AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, hurtVolume);
         Destroy(gameObject);
         GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.Euler(0f, 180f, 0f));
         Destroy(explosion, durationOfDeath);
