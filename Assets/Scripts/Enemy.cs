@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] int health = 200;
+    [SerializeField] float hitWait = 0.1f;
     [SerializeField] float deathWait = 1f;
 
     Animator anim;
@@ -31,8 +32,11 @@ public class Enemy : MonoBehaviour
     public void Damage(int dmg)
     {
         health -= dmg;
+
         if (health <= 0)
             StartCoroutine(Death());
+        else
+            StartCoroutine(Hit());
         
     }
 
@@ -44,4 +48,10 @@ public class Enemy : MonoBehaviour
         //Destroy(gameObject);
     }
 
+    IEnumerator Hit()
+    {
+        GetComponent<SpriteRenderer>().color = new Color(0.91509f, 0.21077f, 0f);
+        yield return new WaitForSeconds(hitWait);
+        GetComponent<SpriteRenderer>().color = new Color(255f, 255f, 255f);
+    }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject deathVFX;
     [SerializeField] AudioClip deathSFX;
     [SerializeField] float durationOfDeath = 3f;
+    [Range(0,1)] [SerializeField] float deathVolume = 1f;
 
     [Header("Sprite Blink")]
     [SerializeField] float gracePeriod = 1f;
@@ -37,6 +39,7 @@ public class Player : MonoBehaviour
 
         anim.SetFloat("Horizontal", 1);
         updatedMoveSpeed = baseMoveSpeed;
+        
     }
 
     void Update()
@@ -162,8 +165,8 @@ public class Player : MonoBehaviour
     private void Death()
     {
         alive = false;
+        AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathVolume);
         Destroy(gameObject);
-        //AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, hurtVolume);
         GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.Euler(0f, 180f, 0f));
         Destroy(explosion, durationOfDeath);
         //FindObjectOfType<Level>().LoadGameOver();
@@ -173,5 +176,6 @@ public class Player : MonoBehaviour
     void FixedUpdate() {
         // Movement
         rb.MovePosition(rb.position + movement * updatedMoveSpeed * 5 * Time.fixedDeltaTime);
+
     }
 }

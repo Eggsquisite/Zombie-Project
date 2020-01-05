@@ -267,8 +267,9 @@ MonoBehaviour:
   baseMoveSpeed: 1
   deathVFX: {fileID: 7181404978213084285, guid: 102db64b3ea50364c818a9d6bbe928f7,
     type: 3}
-  deathSFX: {fileID: 0}
-  durationOfDeath: 1
+  deathSFX: {fileID: 8300000, guid: 8c5c1d0fe4a7dd7408a65f890673c0b4, type: 3}
+  durationOfDeath: 7
+  deathVolume: 1
   gracePeriod: 1
   spriteBlinkMiniDuration: 0.5
   spriteBlinkTotalDuration: 1
