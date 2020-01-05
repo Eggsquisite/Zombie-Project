@@ -263,8 +263,9 @@ MonoBehaviour:
   - {fileID: 1472619892}
   - {fileID: 560424839}
   - {fileID: 963714673}
-  health: 300
+  health: 30
   baseMoveSpeed: 1
+  speedMultiplier: 6
   deathVFX: {fileID: 7181404978213084285, guid: 102db64b3ea50364c818a9d6bbe928f7,
     type: 3}
   deathSFX: {fileID: 8300000, guid: 8c5c1d0fe4a7dd7408a65f890673c0b4, type: 3}
@@ -274,8 +275,12 @@ MonoBehaviour:
   durationOfDeath: 7
   hurtVolume: 1
   spriteBlinkMiniDuration: 0.1
-  spriteBlinkTotalDuration: 1.2
+  spriteBlinkTotalDuration: 1.6
   facing: -1
+  dashTimer: 3
+  maxDash: 20
+  dashSpeed: 10
+  dashState: 0
 --- !u!1 &1271564910112366547
 GameObject:
   m_ObjectHideFlags: 0

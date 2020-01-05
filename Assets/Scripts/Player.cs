@@ -5,13 +5,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] GameObject projectile;
-    [SerializeField] List<Transform> firePoints;
+    [Header("Projectile")]
+    [SerializeField] GameObject projectile = null;
+    [SerializeField] List<Transform> firePoints = null;
+
+    [Header("Player Stats")]
     [SerializeField] float health = 200f;
-    [SerializeField] float baseMoveSpeed;
-    [SerializeField] GameObject deathVFX;
-    [SerializeField] AudioClip deathSFX;
-    [SerializeField] List<AudioClip> hurtSFX;
+    [SerializeField] float baseMoveSpeed = 1f;
+    [SerializeField] float speedMultiplier = 5f;
+    [SerializeField] GameObject deathVFX = null;
+    [SerializeField] AudioClip deathSFX = null;
+    [SerializeField] List<AudioClip> hurtSFX = null;
     [SerializeField] float durationOfDeath = 3f;
     [Range(0,1)] [SerializeField] float hurtVolume = 1f;
 
@@ -27,10 +31,23 @@ public class Player : MonoBehaviour
     private bool alive = true;
     private bool aiming = false;
     private bool playerHit = false;
+    private bool dash = true;
     private float updatedMoveSpeed, rotation;
     [SerializeField] int facing = -1;
+    [SerializeField] float dashTimer = 3f;
+    [SerializeField] float maxDash = 20f;
+    [SerializeField] float dashSpeed = 10f;
+    public DashState dashState;
+    
 
-    Vector2 movement;   // stores x (horiz) and y (vert)
+    Vector2 movement, savedVelocity;   // stores x (horiz) and y (vert)
+
+    public enum DashState
+    {
+        Ready,
+        Dashing,
+        Cooldown
+    }
 
     private void Awake()
     {
@@ -48,11 +65,42 @@ public class Player : MonoBehaviour
         Move();
         ReadyFire();
         Fire();
+        Attack();
+
         if (playerHit)
             GracePeriod();
 
-        if (facing >= 0)
-            Debug.Log("Ready!");
+        switch (dashState)
+        {
+            case DashState.Ready:
+                var isDashKeyDown = Input.GetKeyDown(KeyCode.LeftShift);
+                if (isDashKeyDown)
+                {
+                    savedVelocity = rb.velocity;
+                    rb.velocity = movement * dashSpeed * speedMultiplier * Time.deltaTime;
+                    dashState = DashState.Dashing;
+                }
+                break;
+
+            case DashState.Dashing:
+                dashTimer += Time.deltaTime * 3;
+                if (dashTimer >= maxDash)
+                {
+                    dashTimer = maxDash;
+                    rb.velocity = savedVelocity;
+                    dashState = DashState.Cooldown;
+                }
+                break;
+
+            case DashState.Cooldown:
+                dashTimer -= Time.deltaTime;
+                if (dashTimer <= 0)
+                {
+                    dashTimer = 0;
+                    dashState = DashState.Ready;
+                }
+                break;
+        }
     }
 
     private void Move()
@@ -61,9 +109,7 @@ public class Player : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");        // value btwn -1 and 1
         movement.y = Input.GetAxisRaw("Vertical");          // works default with WASD and arrow keys
 
-        if (Input.GetKey(KeyCode.LeftShift))                // press and hold shift to move faster
-            updatedMoveSpeed = 0f;
-        else if (aiming)
+        if (aiming || Input.GetButton("Fire2"))
             updatedMoveSpeed = baseMoveSpeed * 0f;
         else 
             updatedMoveSpeed = baseMoveSpeed;
@@ -128,7 +174,23 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void SetFire(int rotation)
+    private void Attack()
+    {
+        if (alive)
+        {
+            if (Input.GetButton("Fire1") && aiming == false)
+            {
+                anim.SetBool("Attack", true);
+            }
+        }
+    }
+
+    public void AttackRegister()
+    {
+        firePoints[facing].GetComponent<BoxCollider2D>().enabled = true;
+    }
+
+    public void SetRotation(int rotation)
     {
         facing = rotation;
     }
@@ -158,7 +220,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
         if (damageDealer != null && playerHit == false)
@@ -218,7 +280,6 @@ public class Player : MonoBehaviour
     // Movement
     void FixedUpdate() {
         // Movement
-        rb.MovePosition(rb.position + movement * updatedMoveSpeed * 5 * Time.fixedDeltaTime);
-
+        rb.MovePosition(rb.position + movement * updatedMoveSpeed * speedMultiplier * Time.fixedDeltaTime);
     }
 }

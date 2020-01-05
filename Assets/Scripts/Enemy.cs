@@ -8,16 +8,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] float hitWait = 0.1f;
     [SerializeField] float deathWait = 1f;
 
-    Animator anim;
-    Collider2D m_Collider;
-    private bool player = false;
+    Animator anim = null;
+    Collider2D m_Collider = null;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
         m_Collider = GetComponent<BoxCollider2D>();
-        if (GetComponent<Player>())
-            player = true;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
