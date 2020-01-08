@@ -74,6 +74,7 @@ public class Player : MonoBehaviour
         if (playerHit)
             GracePeriod();
 
+        /*
         switch (dashState)
         {
             case DashState.Ready:
@@ -81,7 +82,8 @@ public class Player : MonoBehaviour
                 if (isDashKeyDown)
                 {
                     savedVelocity = rb.velocity;
-                    rb.velocity = movement * dashSpeed * speedMultiplier * Time.deltaTime;
+                    //rb.velocity = movement * dashSpeed * speedMultiplier * Time.deltaTime;
+                    rb.AddForce(transform.up * dashSpeed, ForceMode2D.Impulse);
                     dashState = DashState.Dashing;
                 }
                 break;
@@ -105,6 +107,7 @@ public class Player : MonoBehaviour
                 }
                 break;
         }
+        */
     }
 
     private void Move()
