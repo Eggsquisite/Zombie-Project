@@ -43,10 +43,17 @@ public class Enemy : MonoBehaviour
 
     private void Death()
     {
-        anim.SetBool("Death", true);
+        anim.SetTrigger("Death");
+        StartCoroutine(Fade());
         m_Collider.enabled = !m_Collider.enabled;
         AudioSource.PlayClipAtPoint(deathSFX, transform.position, enemyVolume);
-        Destroy(gameObject, deathWait);
+        Destroy(gameObject, deathWait * 2);
+    }
+
+    IEnumerator Fade()
+    {
+        yield return new WaitForSeconds(deathWait);
+        anim.SetTrigger("Fade");
     }
 
     IEnumerator Hit()

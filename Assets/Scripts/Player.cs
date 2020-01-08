@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] float baseMoveSpeed = 1f;
     [SerializeField] float speedMultiplier = 5f;
     [SerializeField] GameObject deathVFX = null;
+    [SerializeField] AudioClip bowSFX = null;
     [SerializeField] AudioClip deathSFX = null;
     [SerializeField] List<AudioClip> hurtSFX = null;
     [SerializeField] float durationOfDeath = 3f;
@@ -204,6 +205,7 @@ public class Player : MonoBehaviour
         {
             aiming = false;
             anim.SetBool("Shoot", false);
+            AudioSource.PlayClipAtPoint(bowSFX, transform.position, hurtVolume);
 
             if (facing == 0)
                 rotation = 180f;
