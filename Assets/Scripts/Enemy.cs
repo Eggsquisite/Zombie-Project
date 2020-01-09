@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] int health = 200;
-    [SerializeField] float hitWait = 0.1f;
+    [SerializeField] float hitFlash = 0.1f;
     [SerializeField] float deathWait = 1f;
 
     [SerializeField] AudioClip hurtSFX = null;
@@ -59,7 +59,7 @@ public class Enemy : MonoBehaviour
     IEnumerator Hit()
     {
         GetComponent<SpriteRenderer>().color = new Color(0.91509f, 0.21077f, 0f);
-        yield return new WaitForSeconds(hitWait);
+        yield return new WaitForSeconds(hitFlash);
         GetComponent<SpriteRenderer>().color = new Color(255f, 255f, 255f);
     }
 }

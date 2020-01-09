@@ -14,13 +14,13 @@ TagManager:
   - UI
   - 
   - 
-  - Enemy
-  - Player
-  - Projectile
   - Obstacle
   - Terrain
+  - Projectile
   - 
   - 
+  - Player
+  - Enemy
   - 
   - 
   - 

@@ -401,9 +401,9 @@ MonoBehaviour:
   facing: -1
   spriteBlinkMiniDuration: 0.1
   spriteBlinkTotalDuration: 1.6
-  dashTimer: 2
-  maxDash: 3
-  dashSpeed: 100
+  dashTimer: 0.25
+  dashCooldown: 3
+  dashSpeed: 25
   dashState: 0
 --- !u!1 &1271564910112366547
 GameObject:

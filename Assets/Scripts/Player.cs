@@ -28,9 +28,10 @@ public class Player : MonoBehaviour
     private float spriteBlinkTotalTimer = 0.0f;
 
     [Header("Dash")]
-    [SerializeField] float dashTimer = 3f;
-    [SerializeField] float maxDash = 20f;
+    [SerializeField] float dashTimer = 0.25f;
+    [SerializeField] float dashCooldown = 3f;
     [SerializeField] float dashSpeed = 10f;
+    [SerializeField] float dashing = 0f;
     public DashState dashState;
 
     Rigidbody2D rb;
@@ -40,7 +41,6 @@ public class Player : MonoBehaviour
     private bool alive = true;
     private bool aiming = false;
     private bool playerHit = false;
-    private bool dash = true;
     private float updatedMoveSpeed, rotation;
 
     Vector2 movement, savedVelocity;   // stores x (horiz) and y (vert)
@@ -73,46 +73,11 @@ public class Player : MonoBehaviour
 
         if (playerHit)
             GracePeriod();
-
-        /*
-        switch (dashState)
-        {
-            case DashState.Ready:
-                var isDashKeyDown = Input.GetKeyDown(KeyCode.LeftShift);
-                if (isDashKeyDown)
-                {
-                    savedVelocity = rb.velocity;
-                    //rb.velocity = movement * dashSpeed * speedMultiplier * Time.deltaTime;
-                    rb.AddForce(transform.up * dashSpeed, ForceMode2D.Impulse);
-                    dashState = DashState.Dashing;
-                }
-                break;
-
-            case DashState.Dashing:
-                dashTimer += Time.deltaTime * 3;
-                if (dashTimer >= maxDash)
-                {
-                    dashTimer = maxDash;
-                    rb.velocity = savedVelocity;
-                    dashState = DashState.Cooldown;
-                }
-                break;
-
-            case DashState.Cooldown:
-                dashTimer -= Time.deltaTime;
-                if (dashTimer <= 0)
-                {
-                    dashTimer = 0;
-                    dashState = DashState.Ready;
-                }
-                break;
-        }
-        */
     }
 
     private void Move()
     {
-        // Movement inputs
+        // Movement inputs tied to animation
         movement.x = Input.GetAxisRaw("Horizontal");        // value btwn -1 and 1
         movement.y = Input.GetAxisRaw("Vertical");          // works default with WASD and arrow keys
 
@@ -278,7 +243,8 @@ public class Player : MonoBehaviour
     private void Death()
     {
         alive = false;
-        aud.Stop();
+        if (aud != null)
+            aud.Stop();
         AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, hurtVolume);
         Destroy(gameObject);
         GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.Euler(0f, 180f, 0f));
@@ -289,6 +255,51 @@ public class Player : MonoBehaviour
     // Movement
     void FixedUpdate() {
         // Movement
+        if (dashState != DashState.Dashing)
+            Movement();
+
+        Dash(); 
+    }
+
+    private void Movement()
+    {
         rb.MovePosition(rb.position + movement * updatedMoveSpeed * speedMultiplier * Time.fixedDeltaTime);
+    }
+
+    private void Dash()
+    {
+
+        switch (dashState)
+        {
+            case DashState.Ready:
+                var isDashKeyDown = Input.GetKeyDown(KeyCode.LeftShift);
+                if (isDashKeyDown)
+                {
+                    savedVelocity = rb.velocity;
+          
+                    rb.velocity = new Vector2(movement.x * dashSpeed, movement.y * dashSpeed);
+                    dashState = DashState.Dashing;
+                }
+                break;
+
+            case DashState.Dashing:
+                dashing += Time.deltaTime * 3;
+                if (dashing >= dashTimer)
+                {
+                    dashing = dashCooldown;
+                    rb.velocity = savedVelocity;
+                    dashState = DashState.Cooldown;
+                }
+                break;
+
+            case DashState.Cooldown:
+                dashing -= Time.deltaTime;
+                if (dashing <= 0)
+                {
+                    dashing = 0;
+                    dashState = DashState.Ready;
+                }
+                break;
+        }
     }
 }
