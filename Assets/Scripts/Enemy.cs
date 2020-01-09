@@ -27,9 +27,7 @@ public class Enemy : MonoBehaviour
     {
         DamageDealer damageDealer = other.gameObject.GetComponent<DamageDealer>();
         if (damageDealer != null)
-        {
             Damage(damageDealer.GetDamage());
-        }
     }
 
     public void Damage(int dmg)
