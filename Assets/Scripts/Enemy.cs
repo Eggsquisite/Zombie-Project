@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class Enemy : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] AudioClip deathSFX = null;
     [Range(0, 1)] [SerializeField] float enemyVolume = 1f;
 
+    [SerializeField] EnemyAI enemyAI = null;
     Animator anim = null;
     Collider2D m_Collider = null;
 
@@ -46,6 +48,8 @@ public class Enemy : MonoBehaviour
         anim.SetTrigger("Death");
         StartCoroutine(Fade());
         m_Collider.enabled = !m_Collider.enabled;
+        enemyAI.SetDisabled();
+        enemyAI.enabled = false;
         AudioSource.PlayClipAtPoint(deathSFX, transform.position, enemyVolume);
         Destroy(gameObject, deathWait * 2);
     }

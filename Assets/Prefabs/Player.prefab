@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 560424839}
   - component: {fileID: 584805161}
   - component: {fileID: 584805162}
-  m_Layer: 10
+  m_Layer: 13
   m_Name: FirePoint Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -82,7 +82,7 @@ GameObject:
   - component: {fileID: 963714673}
   - component: {fileID: 185757448}
   - component: {fileID: 185757449}
-  m_Layer: 10
+  m_Layer: 13
   m_Name: FirePoint Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: 1472619892}
   - component: {fileID: 1343124020}
   - component: {fileID: 1343124021}
-  m_Layer: 10
+  m_Layer: 13
   m_Name: FirePoint Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 1271564909439953940}
   - component: {fileID: 1271564909439953939}
   - component: {fileID: 1271564909439953942}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -404,6 +404,7 @@ MonoBehaviour:
   dashTimer: 0.25
   dashCooldown: 3
   dashSpeed: 25
+  dashing: 0
   dashState: 0
 --- !u!1 &1271564910112366547
 GameObject:
@@ -416,7 +417,7 @@ GameObject:
   - component: {fileID: 1271564910112366546}
   - component: {fileID: 2078169844}
   - component: {fileID: 2078169845}
-  m_Layer: 10
+  m_Layer: 13
   m_Name: FirePoint Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
