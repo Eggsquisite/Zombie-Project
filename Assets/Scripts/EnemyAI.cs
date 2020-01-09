@@ -5,7 +5,7 @@ using Pathfinding;
 
 public class EnemyAI : MonoBehaviour
 {
-    [SerializeField] Transform enemyGFX = null;
+    [SerializeField] GameObject enemyGFX = null;
     [SerializeField] Transform target = null;
     [SerializeField] float speed = 200f;
     [SerializeField] float nextWaypointDistance = 3f;       // how close enemy needs to be to waypoint before moving to next one
@@ -80,8 +80,27 @@ public class EnemyAI : MonoBehaviour
             return;
 
         if (force.x >= 0.01f)
-            enemyGFX.localScale = new Vector3(-1f, 1f, 1f);
+        {
+            enemyGFX.transform.localScale = new Vector3(1f, 1f, 1f);
+            //enemyGFX.GetComponent<Animator>().SetFloat("Horizontal", 1f);
+            //enemyGFX.GetComponent<Animator>().SetFloat("Vertical", 0f);
+        }
         else if (force.x <= -0.01f)
-            enemyGFX.localScale = new Vector3(1f, 1f, 1f);
+        { 
+            enemyGFX.transform.localScale = new Vector3(-1f, 1f, 1f);
+            //enemyGFX.GetComponent<Animator>().SetFloat("Vertical", 1f);
+            //enemyGFX.GetComponent<Animator>().SetFloat("Horizontal", 0f);
+        }
+
+        if (force.y >= 0.01f)
+        {
+            enemyGFX.GetComponent<Animator>().SetFloat("Horizontal", 0f);
+            enemyGFX.GetComponent<Animator>().SetFloat("Vertical", 1f);
+        }
+        else if (force.y <= -0.01f)
+        {
+            enemyGFX.GetComponent<Animator>().SetFloat("Vertical", -1f);
+            enemyGFX.GetComponent<Animator>().SetFloat("Horizontal", 0f);
+        }
     }
 }
