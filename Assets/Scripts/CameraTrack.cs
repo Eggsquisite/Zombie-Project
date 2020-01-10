@@ -11,6 +11,17 @@ public class CameraTrack : MonoBehaviour
     Vector3 targetPos;
 
     public float smoothTime = .15f;         // time to follow target
+    float xMin, xMax, yMin, yMax;
+
+    private void Start()
+    {
+        SetUpMoveBoundaries();
+    }
+
+    private void SetUpMoveBoundaries()
+    { 
+        
+    }
 
     void FixedUpdate()
     {

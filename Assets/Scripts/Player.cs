@@ -41,9 +41,10 @@ public class Player : MonoBehaviour
     private bool alive = true;
     private bool aiming = false;
     private bool playerHit = false;
-    private float updatedMoveSpeed, rotation;
+    private float updatedMoveSpeed, rotation, angle;
 
-    Vector2 movement, savedVelocity;   // stores x (horiz) and y (vert)
+    Vector2 movement, savedVelocity;    // stores x (horiz) and y (vert)
+    Vector2 mousePos, lookDir;                   // stores mouse position in relation to camera
 
     public enum DashState
     {
@@ -71,8 +72,20 @@ public class Player : MonoBehaviour
         Fire();
         Attack();
 
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
         if (playerHit)
             GracePeriod();
+    }
+
+    // Movement
+    void FixedUpdate()
+    {
+        // Movement
+        if (dashState != DashState.Dashing)
+            Movement();
+
+        Dash();
     }
 
     private void Move()
@@ -187,7 +200,7 @@ public class Player : MonoBehaviour
             Instantiate(
                 projectile,
                 firePoints[facing].position,
-                Quaternion.Euler(0f, 0f, rotation));
+                Quaternion.identity);
 
             facing = -1;
         }
@@ -250,15 +263,6 @@ public class Player : MonoBehaviour
         GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.Euler(0f, 180f, 0f));
         Destroy(explosion, durationOfDeath);
         //FindObjectOfType<Level>().LoadGameOver();
-    }
-
-    // Movement
-    void FixedUpdate() {
-        // Movement
-        if (dashState != DashState.Dashing)
-            Movement();
-
-        Dash(); 
     }
 
     private void Movement()
