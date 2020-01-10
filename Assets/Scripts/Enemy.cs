@@ -16,8 +16,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] AudioClip deathSFX = null;
     [Range(0, 1)] [SerializeField] float enemyVolume = 1f;
 
-    
-
     Animator anim = null;
     Collider2D m_Collider = null;
 
@@ -54,13 +52,16 @@ public class Enemy : MonoBehaviour
 
         AudioSource.PlayClipAtPoint(deathSFX, transform.position, enemyVolume);
         SpawnLoot();
-
-        Destroy(gameObject, deathWait * 2);
     }
 
     private void SpawnLoot()
     {
-        Instantiate(lootPrefabs[Random.Range(0, lootPrefabs.Count)], transform.position, Quaternion.identity);
+        int rand = Random.Range(0, 7);
+
+        if (rand >= 4)
+            Instantiate(lootPrefabs[Random.Range(0, lootPrefabs.Count)], transform.position, Quaternion.identity);
+        else
+            return;
     }
 
     IEnumerator Fade()

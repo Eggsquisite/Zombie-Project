@@ -9,6 +9,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] Transform target = null;
     [SerializeField] float speed = 200f;
     [SerializeField] float nextWaypointDistance = 3f;       // how close enemy needs to be to waypoint before moving to next one
+    [SerializeField] float deathWait = 5f;
 
     Path path;
     private int currentWaypoint = 0;
@@ -72,6 +73,8 @@ public class EnemyAI : MonoBehaviour
         dead = false;
         if(rb != null)
             rb.velocity = new Vector3(0f, 0f, 0f);
+
+        Destroy(gameObject, deathWait * 2);
     }
 
     private void Facing(Vector2 force)

@@ -3271,21 +3271,6 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 579773876}
-    - target: {fileID: 2144626282, guid: 81ec160b85c2c944eaa64fe145e710a1, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2102517391015495907, guid: 81ec160b85c2c944eaa64fe145e710a1,
-        type: 3}
-      propertyPath: lootPrefabs.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2102517391015495907, guid: 81ec160b85c2c944eaa64fe145e710a1,
-        type: 3}
-      propertyPath: lootPrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 1256392642502496013, guid: 09c4025cba7ce7c4190c16a3a29d2180,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81ec160b85c2c944eaa64fe145e710a1, type: 3}
 --- !u!1 &347867608
