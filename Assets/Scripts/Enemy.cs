@@ -5,15 +5,19 @@ using Pathfinding;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] EnemyAI enemyAI = null;
     [SerializeField] int health = 200;
     [SerializeField] float hitFlash = 0.1f;
     [SerializeField] float deathWait = 1f;
 
+    [SerializeField] List<GameObject> lootPrefabs = null;
+    
     [SerializeField] AudioClip hurtSFX = null;
     [SerializeField] AudioClip deathSFX = null;
     [Range(0, 1)] [SerializeField] float enemyVolume = 1f;
 
-    [SerializeField] EnemyAI enemyAI = null;
+    
+
     Animator anim = null;
     Collider2D m_Collider = null;
 
@@ -38,7 +42,6 @@ public class Enemy : MonoBehaviour
             Death();
         else
             StartCoroutine(Hit());
-        
     }
 
     private void Death()
@@ -48,8 +51,16 @@ public class Enemy : MonoBehaviour
         m_Collider.enabled = !m_Collider.enabled;
         enemyAI.SetDisabled();
         enemyAI.enabled = false;
+
         AudioSource.PlayClipAtPoint(deathSFX, transform.position, enemyVolume);
+        SpawnLoot();
+
         Destroy(gameObject, deathWait * 2);
+    }
+
+    private void SpawnLoot()
+    {
+        Instantiate(lootPrefabs[Random.Range(0, lootPrefabs.Count)], transform.position, Quaternion.identity);
     }
 
     IEnumerator Fade()

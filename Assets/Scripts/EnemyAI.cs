@@ -70,7 +70,8 @@ public class EnemyAI : MonoBehaviour
     public void SetDisabled()
     {
         dead = false;
-        rb.velocity = new Vector3(0f, 0f, 0f);
+        if(rb != null)
+            rb.velocity = new Vector3(0f, 0f, 0f);
     }
 
     private void Facing(Vector2 force)
