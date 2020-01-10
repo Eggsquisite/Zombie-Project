@@ -18,7 +18,6 @@ public class EnemyAI : MonoBehaviour
     Seeker seeker;
     Rigidbody2D rb;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -71,7 +70,7 @@ public class EnemyAI : MonoBehaviour
     public void SetDisabled()
     {
         dead = false;
-        transform.position = new Vector2(transform.position.x, transform.position.y);
+        rb.velocity = new Vector3(0f, 0f, 0f);
     }
 
     private void Facing(Vector2 force)
