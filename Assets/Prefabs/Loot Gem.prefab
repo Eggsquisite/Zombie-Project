@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 845897505082657135}
   - component: {fileID: 845897505082657134}
   - component: {fileID: 845897505082657133}
+  - component: {fileID: 1658476151559855148}
   - component: {fileID: 845897505082657132}
   m_Layer: 0
   m_Name: Loot Gem
@@ -101,6 +102,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!61 &1658476151559855148
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 845897505082657123}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.4375, y: 0.4375}
+    newSize: {x: 0.4375, y: 0.4375}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.4375, y: 0.4375}
+  m_EdgeRadius: 0
 --- !u!114 &845897505082657132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,5 +143,4 @@ MonoBehaviour:
   destroyWait: 5
   blinkTime: 0.25
   maxBlinks: 16
-  blinkAmount: 0
-  pickupNoise: {fileID: 0}
+  pickupNoise: {fileID: 8300000, guid: 1213b82ed9b2640ed824a6eb4fa828cc, type: 3}

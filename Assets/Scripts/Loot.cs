@@ -7,7 +7,7 @@ public class Loot : MonoBehaviour
     [SerializeField] float destroyWait = 5f;
     [SerializeField] float blinkTime = 0.25f;
     [SerializeField] int maxBlinks = 16;
-    [SerializeField] int blinkAmount = 0;
+    int blinkAmount = 0;
 
     [SerializeField] AudioClip pickupNoise = null;
 
