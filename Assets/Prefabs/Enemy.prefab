@@ -98,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyGFX: {fileID: 2102517391015495905}
   target: {fileID: 0}
-  speed: 400
+  speed: 350
   nextWaypointDistance: 1
   deathWait: 5
 --- !u!58 &733332063
@@ -264,6 +264,7 @@ MonoBehaviour:
   deathWait: 5
   lootPrefabs:
   - {fileID: 1256392642502496013, guid: 09c4025cba7ce7c4190c16a3a29d2180, type: 3}
+  - {fileID: 845897505082657123, guid: 303089f709154ca488eac728877d36da, type: 3}
   hurtSFX: {fileID: 0}
   deathSFX: {fileID: 8300000, guid: fa208c72c4de94a11a8c7f587266c435, type: 3}
   enemyVolume: 0.5
