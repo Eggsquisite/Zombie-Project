@@ -3212,11 +3212,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Death
       objectReference: {fileID: 0}
-    - target: {fileID: 7181404978213084285, guid: 102db64b3ea50364c818a9d6bbe928f7,
-        type: 3}
-      propertyPath: m_Layer
-      value: 18
-      objectReference: {fileID: 0}
     - target: {fileID: 7181404978213084280, guid: 102db64b3ea50364c818a9d6bbe928f7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3230,7 +3225,7 @@ PrefabInstance:
     - target: {fileID: 7181404978213084280, guid: 102db64b3ea50364c818a9d6bbe928f7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.82
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7181404978213084280, guid: 102db64b3ea50364c818a9d6bbe928f7,
         type: 3}
@@ -3345,6 +3340,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 579773876}
+    - target: {fileID: 2144626282, guid: 81ec160b85c2c944eaa64fe145e710a1, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81ec160b85c2c944eaa64fe145e710a1, type: 3}
 --- !u!1 &347867608
@@ -25742,14 +25741,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1865501243}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac5a39e7e465d9140b02584f900dc6a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab:
   - {fileID: 2102517390266798923, guid: 81ec160b85c2c944eaa64fe145e710a1, type: 3}
-  spawnRate: 5
+  spawnRateMin: 2
+  spawnRateMax: 3
+  spawnAmount: 5
 --- !u!4 &2144626285 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2102517390266798924, guid: 81ec160b85c2c944eaa64fe145e710a1,

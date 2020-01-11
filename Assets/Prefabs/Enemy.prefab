@@ -91,7 +91,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2102517390266798923}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd8d9746f7fc87542a5571e6c9d7d0df, type: 3}
   m_Name: 
@@ -100,6 +100,7 @@ MonoBehaviour:
   target: {fileID: 0}
   speed: 400
   nextWaypointDistance: 1
+  deathWait: 5
 --- !u!58 &733332063
 CircleCollider2D:
   m_ObjectHideFlags: 0
