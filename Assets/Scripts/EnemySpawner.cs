@@ -26,7 +26,6 @@ public class EnemySpawner : MonoBehaviour
     {
         do
         {
-            Debug.Log("Hello");
             if (enemiesSpawned >= spawnAmount)
                 spawn = false;
 

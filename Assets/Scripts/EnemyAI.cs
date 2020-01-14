@@ -6,7 +6,7 @@ using Pathfinding;
 public class EnemyAI : MonoBehaviour
 {
     [SerializeField] GameObject enemyGFX = null;
-    [SerializeField] Transform target = null;
+    Transform target = null;
     [SerializeField] float speed = 200f;
     [SerializeField] float nextWaypointDistance = 3f;       // how close enemy needs to be to waypoint before moving to next one
     [SerializeField] float deathWait = 5f;
