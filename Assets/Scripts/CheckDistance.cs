@@ -7,10 +7,11 @@ public class CheckDistance : MonoBehaviour
     EnemyAI enemyAI;
     Rigidbody2D rb;
     Transform target;
-    public bool found = false;
+    bool found = false;
+    public bool deathStatus = false;
 
     [SerializeField] float checkDistance = 5f;
-    [SerializeField] float haltTime = 2f;
+    [SerializeField] float haltTime = 5f;
     [SerializeField] LayerMask myLayerMask;
     [SerializeField] Transform startPosition = null;
 
@@ -35,8 +36,9 @@ public class CheckDistance : MonoBehaviour
 
         if (found && hit.collider.gameObject.name == "Player")
         {
-            Debug.Log("Player hit with raycast");
-            enemyAI.enabled = true;
+            if (!CheckDeath())
+                enemyAI.enabled = true;
+
             return;
         }
         else
@@ -51,5 +53,11 @@ public class CheckDistance : MonoBehaviour
         yield return new WaitForSeconds(haltTime);
         if (!found)
             enemyAI.enabled = false;
+    }
+
+    private bool CheckDeath()
+    {
+        deathStatus = enemyAI.GetDeathStatus();
+        return enemyAI.GetDeathStatus();
     }
 }

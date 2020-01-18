@@ -76,11 +76,16 @@ public class EnemyAI : MonoBehaviour
 
     public void SetDisabled()
     {
-        dead = false;
+        dead = true;
         if(rb != null)
             rb.velocity = new Vector3(0f, 0f, 0f);
 
         Destroy(gameObject, deathWait * 2);
+    }
+
+    public bool GetDeathStatus()
+    {
+        return dead;
     }
 
     private void Facing(Vector2 force)

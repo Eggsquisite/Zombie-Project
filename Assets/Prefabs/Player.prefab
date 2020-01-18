@@ -294,9 +294,9 @@ GameObject:
   - component: {fileID: 1271564909439953943}
   - component: {fileID: 1271564909439953928}
   - component: {fileID: 1271564909439953941}
+  - component: {fileID: 1271564909439953942}
   - component: {fileID: 1271564909439953940}
   - component: {fileID: 1271564909439953939}
-  - component: {fileID: 1271564909439953942}
   m_Layer: 13
   m_Name: Player
   m_TagString: Player
@@ -393,6 +393,45 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1271564909439953942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271564909439953929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fceca3818655c447996eb005a4867d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 4593162864101900849, guid: 0761399b318730e4a8fe45c30093b742,
+    type: 3}
+  firePoints:
+  - {fileID: 1271564910112366546}
+  - {fileID: 1472619892}
+  - {fileID: 560424839}
+  - {fileID: 963714673}
+  health: 30
+  baseMoveSpeed: 1
+  speedMultiplier: 5
+  deathVFX: {fileID: 7181404978213084285, guid: 102db64b3ea50364c818a9d6bbe928f7,
+    type: 3}
+  bowSFX: {fileID: 8300000, guid: e452c4504bcdc87428f20a8eea5d09de, type: 3}
+  deathSFX: {fileID: 8300000, guid: 8c5c1d0fe4a7dd7408a65f890673c0b4, type: 3}
+  hurtSFX:
+  - {fileID: 8300000, guid: 6bd1835d3379443f480d3953eaa3be02, type: 3}
+  - {fileID: 8300000, guid: be8f35d0ffa544fde837064d01ad7063, type: 3}
+  durationOfDeath: 7
+  hurtVolume: 1
+  facing: -1
+  spriteBlinkMiniDuration: 0.1
+  spriteBlinkTotalDuration: 1.6
+  dashTimer: 0.25
+  dashCooldown: 3
+  dashSpeed: 25
+  dashing: 0
+  dashState: 0
 --- !u!95 &1271564909439953940
 Animator:
   serializedVersion: 3
@@ -438,45 +477,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5833938, y: 1.1415882}
   m_EdgeRadius: 0
---- !u!114 &1271564909439953942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1271564909439953929}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fceca3818655c447996eb005a4867d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectile: {fileID: 4593162864101900849, guid: 0761399b318730e4a8fe45c30093b742,
-    type: 3}
-  firePoints:
-  - {fileID: 1271564910112366546}
-  - {fileID: 1472619892}
-  - {fileID: 560424839}
-  - {fileID: 963714673}
-  health: 30
-  baseMoveSpeed: 1
-  speedMultiplier: 6
-  deathVFX: {fileID: 7181404978213084285, guid: 102db64b3ea50364c818a9d6bbe928f7,
-    type: 3}
-  bowSFX: {fileID: 8300000, guid: e452c4504bcdc87428f20a8eea5d09de, type: 3}
-  deathSFX: {fileID: 8300000, guid: 8c5c1d0fe4a7dd7408a65f890673c0b4, type: 3}
-  hurtSFX:
-  - {fileID: 8300000, guid: 6bd1835d3379443f480d3953eaa3be02, type: 3}
-  - {fileID: 8300000, guid: be8f35d0ffa544fde837064d01ad7063, type: 3}
-  durationOfDeath: 7
-  hurtVolume: 1
-  facing: -1
-  spriteBlinkMiniDuration: 0.1
-  spriteBlinkTotalDuration: 1.6
-  dashTimer: 0.25
-  dashCooldown: 3
-  dashSpeed: 25
-  dashing: 0
-  dashState: 0
 --- !u!1 &1271564910112366547
 GameObject:
   m_ObjectHideFlags: 0
