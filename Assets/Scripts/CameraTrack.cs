@@ -30,7 +30,7 @@ public class CameraTrack : MonoBehaviour
             targetPos = target.position;            // target position
             targetPos.z = transform.position.z;     // align camera and targets z position
 
-            transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime * Time.deltaTime);
+            transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, .5f * Time.deltaTime);
         }
     }
 }

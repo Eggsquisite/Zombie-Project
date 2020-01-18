@@ -10,11 +10,13 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] float speed = 200f;
     [SerializeField] float nextWaypointDistance = 3f;       // how close enemy needs to be to waypoint before moving to next one
     [SerializeField] float deathWait = 5f;
+    [SerializeField] float checkDistance = 5f;
 
     Path path;
     private int currentWaypoint = 0;
     bool reachedEndOfPath = false;
     bool dead = false;
+    public bool inDistance = false;
 
     Seeker seeker;
     Rigidbody2D rb;
@@ -25,12 +27,15 @@ public class EnemyAI : MonoBehaviour
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         target = FindObjectOfType<Player>().gameObject.transform;
+    }
 
+    private void InDistance()
+    {
         InvokeRepeating("UpdatePath", 0f, .5f);
     }
 
     private void UpdatePath()
-    { 
+    {
         if (seeker.IsDone() && !dead && target != null)
             seeker.StartPath(rb.position, target.position, OnPathComplete);
     }
@@ -41,6 +46,31 @@ public class EnemyAI : MonoBehaviour
         {
             path = p;
             currentWaypoint = 0;
+        }
+    }
+
+    private void Update()
+    {
+        if (target != null)
+        {
+            float newDistance = Vector2.Distance(rb.position, target.position);
+            Vector2 direction = ((Vector2)target.position - rb.position).normalized;
+
+
+
+            if (newDistance <= 5)
+            {
+                Debug.Log("In distance!");
+                Debug.DrawLine(rb.position, target.position, Color.green);
+                RaycastHit2D hit = Physics2D.Raycast(rb.position, direction, checkDistance);
+
+                if (hit.collider.gameObject.name == "Player")
+                {
+                    Debug.Log("Player hit with raycast");
+                    InDistance();
+                    return;
+                }
+            }
         }
     }
 
@@ -57,16 +87,29 @@ public class EnemyAI : MonoBehaviour
         else
             reachedEndOfPath = false;
 
+
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;         // gives vector from position to next waypoint
         Vector2 force = direction * speed * Time.deltaTime;
+        
 
         rb.AddForce(force);
-        Facing(force);
+        //Facing(force);
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
-
         if (distance < nextWaypointDistance)
             currentWaypoint++;
+    }
+
+    private void CheckDistance(Vector2 targetDir)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(rb.position, targetDir, checkDistance);
+
+        if (hit.collider.gameObject.tag == "Player")
+        {
+            Debug.Log("Player hit with raycast");
+            InDistance();
+            return;
+        }
     }
 
     public void SetDisabled()
