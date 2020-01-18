@@ -83,6 +83,11 @@ public class EnemyAI : MonoBehaviour
         Destroy(gameObject, deathWait * 2);
     }
 
+    public void SetTarget(Transform newTargetPos)
+    {
+        target = newTargetPos;
+    }
+
     public bool GetDeathStatus()
     {
         return dead;

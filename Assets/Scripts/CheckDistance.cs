@@ -6,14 +6,12 @@ public class CheckDistance : MonoBehaviour
 {
     EnemyAI enemyAI;
     Rigidbody2D rb;
-    Transform target;
+    Transform target, startPosition;
     bool found = false;
-    public bool deathStatus = false;
 
     [SerializeField] float checkDistance = 5f;
     [SerializeField] float haltTime = 5f;
     [SerializeField] LayerMask myLayerMask;
-    [SerializeField] Transform startPosition = null;
 
     private void Start()
     {
@@ -21,9 +19,10 @@ public class CheckDistance : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         target = FindObjectOfType<Player>().gameObject.transform;
+        startPosition = gameObject.transform;
 
         enemyAI.enabled = false;
-        InvokeRepeating("CalculateDistance", 0f, 1f);
+        InvokeRepeating("CalculateDistance", 0f, 0.5f);
     }
 
     private void CalculateDistance()
@@ -37,9 +36,12 @@ public class CheckDistance : MonoBehaviour
         if (found && hit.collider.gameObject.name == "Player")
         {
             if (!CheckDeath())
+            {
                 enemyAI.enabled = true;
+                enemyAI.SetTarget(target);
 
-            return;
+                return;
+            }
         }
         else
         {
@@ -57,7 +59,6 @@ public class CheckDistance : MonoBehaviour
 
     private bool CheckDeath()
     {
-        deathStatus = enemyAI.GetDeathStatus();
         return enemyAI.GetDeathStatus();
     }
 }
