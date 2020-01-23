@@ -32,7 +32,6 @@ public class Player : MonoBehaviour
     [SerializeField] float dashCooldown = 3f;
     [SerializeField] float dashSpeed = 10f;
     [SerializeField] float dashing = 0f;
-    public DashState dashState;
 
     Rigidbody2D rb;
     Animator anim;
@@ -46,11 +45,22 @@ public class Player : MonoBehaviour
     Vector2 movement, savedVelocity;    // stores x (horiz) and y (vert)
     Vector2 mousePos, lookDir;                   // stores mouse position in relation to camera
 
+    public DashState dashState;
+    public Facing faceState;
+
     public enum DashState
     {
         Ready,
         Dashing,
         Cooldown
+    }
+
+    public enum Facing
+    { 
+        Left,
+        Right,
+        Down,
+        Up
     }
 
     private void Awake()
@@ -70,7 +80,6 @@ public class Player : MonoBehaviour
         Move();
         ReadyFire();
         Fire();
-        Attack();
 
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -105,18 +114,24 @@ public class Player : MonoBehaviour
         if (movement.y >= 1)
         {
             // facing/moving UP
-            if (aiming && facing >= 0)
-                facing = 1;
+            if (aiming && facing >= 0) 
+            {
+                facing = 0;
+            }
 
+            faceState = Facing.Up;
             anim.SetFloat("Vertical", 1);
             anim.SetFloat("Horizontal", 0);
         }
         else if (movement.y < 0)
         {
             // facing/moving DOWN
-            if (aiming && facing >= 0)
-                facing = 0;
+            if (aiming && facing >= 0) 
+            {
+                facing = 1;
+            }
 
+            faceState = Facing.Down;
             anim.SetFloat("Vertical", -1);
             anim.SetFloat("Horizontal", 0);
         }
@@ -125,8 +140,11 @@ public class Player : MonoBehaviour
         {
             // facing/moving RIGHT
             if (aiming && facing >= 0)
+            {
                 facing = 2;
+            }
 
+            faceState = Facing.Right;
             anim.SetFloat("Horizontal", 1);
             anim.SetFloat("Vertical", 0);
         }
@@ -134,8 +152,11 @@ public class Player : MonoBehaviour
         {
             // facing/moving LEFT
             if (aiming && facing >= 0)
+            {
                 facing = 3;
+            }
 
+            faceState = Facing.Left;
             anim.SetFloat("Horizontal", -1);
             anim.SetFloat("Vertical", 0);
         }
@@ -159,22 +180,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Attack()
-    {
-        if (alive)
-        {
-            if (Input.GetButton("Fire1") && aiming == false)
-            {
-                //anim.SetBool("Attack", true);
-            }
-        }
-    }
-
-    public void AttackRegister()
-    {
-        firePoints[facing].GetComponent<BoxCollider2D>().enabled = true;
-    }
-
     public void SetRotation(int rotation)
     {
         facing = rotation;
@@ -189,9 +194,9 @@ public class Player : MonoBehaviour
             AudioSource.PlayClipAtPoint(bowSFX, transform.position, hurtVolume);
 
             if (facing == 0)
-                rotation = 180f;
-            else if (facing == 1)
                 rotation = 0f;
+            else if (facing == 1)
+                rotation = 180f;
             else if (facing == 2)
                 rotation = -90f;
             else if (facing == 3)
@@ -199,7 +204,8 @@ public class Player : MonoBehaviour
 
             Instantiate(
                 projectile,
-                firePoints[facing].position,
+                //firePoints[facing].position,
+                transform.position,
                 Quaternion.identity);
 
             facing = -1;
