@@ -57,3 +57,6 @@ TagManager:
   - name: Misc
     uniqueID: 3595607101
     locked: 0
+  - name: Projectile
+    uniqueID: 3504253721
+    locked: 0

@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [Header("Projectile")]
+    [Header("Misc")]
     [SerializeField] GameObject projectile = null;
     [SerializeField] List<Transform> firePoints = null;
+    [SerializeField] Transform lightSource = null;
+    [SerializeField] float smooth = 5f;
 
     [Header("Player Stats")]
     [SerializeField] float health = 200f;
@@ -19,7 +21,7 @@ public class Player : MonoBehaviour
     [SerializeField] List<AudioClip> hurtSFX = null;
     [SerializeField] float durationOfDeath = 3f;
     [Range(0,1)] [SerializeField] float hurtVolume = 1f;
-    [SerializeField] int facing = -1;
+    private int facing = -1;
 
     [Header("Sprite Blink")]
     [SerializeField] float spriteBlinkMiniDuration = 0.1f;
@@ -95,6 +97,7 @@ public class Player : MonoBehaviour
             Movement();
 
         Dash();
+        FindAngle();
     }
 
     private void Move()
@@ -183,6 +186,15 @@ public class Player : MonoBehaviour
     public void SetRotation(int rotation)
     {
         facing = rotation;
+    }
+
+    private void FindAngle()
+    {
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 lookDir = mousePos - rb.position;
+        float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
+        Quaternion target = Quaternion.Euler(0, 0, angle);
+        lightSource.rotation = Quaternion.Slerp(lightSource.rotation, target, Time.deltaTime * smooth);
     }
 
     public void Fire()
