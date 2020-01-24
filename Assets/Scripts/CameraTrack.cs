@@ -17,7 +17,9 @@ public class CameraTrack : MonoBehaviour
     private void Start()
     {
         SetUpMoveBoundaries();
-        target = FindObjectOfType<Player>().transform;
+
+        //target = FindObjectOfType<Player>().transform;
+        target = GameObject.Find("/Human Player").transform;
     }
 
     private void SetUpMoveBoundaries()

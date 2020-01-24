@@ -256,12 +256,11 @@ public class Player : MonoBehaviour
             target = Quaternion.Euler(0, 0, 90);
         }
 
-
         if (lightSource != null)
             lightSource.transform.rotation = Quaternion.Slerp(lightSource.transform.rotation, target, Time.deltaTime * smooth);
     }
 
-    public void Fire()
+    private void Fire()
     {
         if (Input.GetButton("Fire1") && aiming == true && facing >= 0)
         {
@@ -350,11 +349,11 @@ public class Player : MonoBehaviour
     private void ShadowDeath()
     {
         alive = false;
-        if (aud != null)
-            aud.Stop();
         AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, hurtVolume);
+
         anim.SetTrigger("Shadow Death");
         shadowDeath = true;
+        sc.SwitchPlayer();
         //FindObjectOfType<Level>().LoadGameOver();
     }
 

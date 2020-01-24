@@ -18,18 +18,19 @@ public class CheckDistance : MonoBehaviour
         enemyAI = GetComponent<EnemyAI>();
 
         rb = GetComponent<Rigidbody2D>();
-        target = FindObjectOfType<Player>().gameObject.transform;
+        target = GameObject.Find("/Human Player").transform;
+        //target = FindObjectOfType<Player>().gameObject.transform;
         startPosition = gameObject.transform;
 
         enemyAI.enabled = false;
-        InvokeRepeating("CalculateDistance", 0f, 1f);
+        InvokeRepeating("CalculateDistance", 0f, 0.5f);
     }
 
     private void CalculateDistance()
     {
 
         Vector2 targetDir = ((Vector2)target.position - rb.position).normalized;
-        //Debug.DrawLine(rb.position, target.position);
+        Debug.DrawLine(rb.position, target.position);
         RaycastHit2D hit = Physics2D.Raycast(rb.position, targetDir, checkDistance, myLayerMask);
         found = Physics2D.Raycast(rb.position, targetDir, checkDistance, myLayerMask);
 
