@@ -193,8 +193,8 @@ public class Player : MonoBehaviour
 
     private void StopMovement()
     {
-        Debug.Log("Stopping movement for: " + gameObject.name);
-        rb.velocity = new Vector3(0f, 0f, 0f);
+        //Debug.Log("Stopping movement for: " + gameObject.name);
+        //rb.velocity = new Vector3(0f, 0f, 0f);
     }
 
     private void ReadyFire()
@@ -229,19 +229,6 @@ public class Player : MonoBehaviour
 
         if (lightSource != null)
             lightSource.transform.rotation = Quaternion.Slerp(lightSource.transform.rotation, target, Time.deltaTime * smooth);
-    }
-
-    private void LightControl()
-    {
-        var globalLight = lightSource.GetComponent<Light2D>();
-        if (shadow && playerActive)
-        {
-            globalLight.enabled = true;
-        }
-        else if (shadow && !playerActive)
-        {
-            globalLight.enabled = false;    
-        }
     }
 
     public void Fire()

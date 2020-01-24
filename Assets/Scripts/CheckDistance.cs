@@ -22,18 +22,18 @@ public class CheckDistance : MonoBehaviour
         startPosition = gameObject.transform;
 
         enemyAI.enabled = false;
-        InvokeRepeating("CalculateDistance", 0f, 0.5f);
+        InvokeRepeating("CalculateDistance", 0f, 1f);
     }
 
     private void CalculateDistance()
     {
 
         Vector2 targetDir = ((Vector2)target.position - rb.position).normalized;
-        Debug.DrawLine(rb.position, target.position);
+        //Debug.DrawLine(rb.position, target.position);
         RaycastHit2D hit = Physics2D.Raycast(rb.position, targetDir, checkDistance, myLayerMask);
         found = Physics2D.Raycast(rb.position, targetDir, checkDistance, myLayerMask);
 
-        if (found && hit.collider.gameObject.name == "Player")
+        if (found && hit.collider.gameObject.name.Contains("Human"))
         {
             if (!CheckDeath())
             {

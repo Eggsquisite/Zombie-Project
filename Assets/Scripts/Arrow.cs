@@ -30,8 +30,8 @@ public class Arrow : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(ready)
-            rb.velocity = transform.up * speed * Time.deltaTime;
+        if (ready)
+            rb.velocity = transform.up * speed * Time.unscaledDeltaTime;
     }
 
     private void OnTriggerEnter2D(Collider2D coll)
