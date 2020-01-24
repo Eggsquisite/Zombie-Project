@@ -46,7 +46,10 @@ public class SwitchController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SwitchInput();
+        //SwitchInput();
+
+        if (switchTimer <= switchCooldown)
+            switchTimer += Time.deltaTime;
 
         if (Time.timeScale != 1f)
             ResetTimeScale();
@@ -60,12 +63,9 @@ public class SwitchController : MonoBehaviour
        
     }
 
-    private void SwitchInput()
+    public void SwitchPlayer()
     {
-        if (switchTimer <= switchCooldown)
-            switchTimer += Time.deltaTime;
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) && switchTimer >= switchCooldown)
+        if (switchTimer >= switchCooldown)
         {
             if (myShadow.GetShadowDeath() == true)
             {

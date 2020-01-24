@@ -38,7 +38,7 @@ public class Loot : MonoBehaviour
     // Update is called once per frame
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Player")
+        if (collision.gameObject.name.Contains("Player"))
         {
             AudioSource.PlayClipAtPoint(pickupNoise, transform.position);
             // Call player function

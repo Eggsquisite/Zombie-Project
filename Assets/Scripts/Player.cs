@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     Animator anim;
     AudioSource aud;
     SpriteRenderer sp;
+    SwitchController sc;
     private bool alive = true;
     private bool aiming = false;
     private bool playerHit = false;
@@ -75,6 +76,7 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         aud = FindObjectOfType<AudioSource>();
         sp = GetComponent<SpriteRenderer>();
+        sc = FindObjectOfType<SwitchController>();
 
         if (gameObject.name.Contains("Shadow"))
             shadow = true;
@@ -88,14 +90,18 @@ public class Player : MonoBehaviour
     void Update()
     {
         Animate();
+        LightRotation();
         if (playerActive)
         {
             Move();
 
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+                sc.SwitchPlayer();
+
             if (!shadow)
             {
-                ReadyFire();
-                Fire();
+                //ReadyFire();
+                //Fire();
             }
         }
         else if (!playerActive)
@@ -116,8 +122,6 @@ public class Player : MonoBehaviour
         if (dashState != DashState.Dashing)
             Movement();
 
-        if (playerActive)
-            FindAngle();
 
         if (shadow && playerActive)
             Dash();
@@ -225,12 +229,33 @@ public class Player : MonoBehaviour
         facing = rotation;
     }
 
-    private void FindAngle()
+    private void LightRotation()
     {
+        /*
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 lookDir = mousePos - rb.position;
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
         Quaternion target = Quaternion.Euler(0, 0, angle);
+        */
+        Quaternion target = Quaternion.identity;
+
+        if (faceState == Facing.Down)
+        {
+            target = Quaternion.Euler(0, 0, 180);
+        }
+        else if (faceState == Facing.Up)
+        {
+            target = Quaternion.Euler(0, 0, 0);
+        }
+        else if (faceState == Facing.Right)
+        {
+            target = Quaternion.Euler(0, 0, -90);
+        }
+        else if (faceState == Facing.Left)
+        {
+            target = Quaternion.Euler(0, 0, 90);
+        }
+
 
         if (lightSource != null)
             lightSource.transform.rotation = Quaternion.Slerp(lightSource.transform.rotation, target, Time.deltaTime * smooth);
