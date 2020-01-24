@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f34ae7089ebe1745a36781565b3eaea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothTime: 100
+  smoothTime: 10
 --- !u!95 &858437171
 Animator:
   serializedVersion: 3

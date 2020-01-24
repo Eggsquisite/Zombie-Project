@@ -10,7 +10,8 @@ public class CameraTrack : MonoBehaviour
     Vector3 velocity = Vector3.zero;        // zero's out velocity
     Vector3 targetPos;
 
-    public float smoothTime = .15f;         // time to follow target
+    public float smoothTime = 10f;         // time to follow target
+    public const float staticSmoothTime = 10f;
     float xMin, xMax, yMin, yMax;
 
     private void Start()
@@ -22,6 +23,16 @@ public class CameraTrack : MonoBehaviour
     private void SetUpMoveBoundaries()
     { 
         
+    }
+
+    public void SetSmoothTime(float value)
+    {
+        smoothTime = value;
+    }
+
+    public void ResetSmoothTime()
+    {
+        smoothTime = staticSmoothTime;
     }
 
     public void UpdatePlayer(Transform player)

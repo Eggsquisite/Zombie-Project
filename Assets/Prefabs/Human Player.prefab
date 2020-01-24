@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 2022161900}
   - component: {fileID: 2022161901}
   - component: {fileID: 2022161903}
-  m_Layer: 13
+  m_Layer: 17
   m_Name: Directional Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -308,7 +308,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2022161899}
-  m_LocalRotation: {x: 0, y: 0, z: -0.08811195, w: 0.9961106}
+  m_LocalRotation: {x: -0, y: -0, z: -0.098113164, w: 0.9951753}
   m_LocalPosition: {x: -0.03, y: -0.56, z: 0}
   m_LocalScale: {x: 1, y: 2.5625, z: 1}
   m_Children: []
@@ -340,8 +340,8 @@ MonoBehaviour:
   m_AlphaBlendOnOverlap: 0
   m_PointLightInnerAngle: 85
   m_PointLightOuterAngle: 115
-  m_PointLightInnerRadius: 4
-  m_PointLightOuterRadius: 10
+  m_PointLightInnerRadius: 5
+  m_PointLightOuterRadius: 7
   m_PointLightDistance: 3
   m_PointLightQuality: 1
   m_ShapeLightParametricSides: 5
@@ -452,7 +452,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 140733777
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 20
   m_Sprite: {fileID: 21300000, guid: 0f39a9205e4394ee1b6ba8269428d176, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -505,8 +505,7 @@ MonoBehaviour:
   - {fileID: 1472619892}
   - {fileID: 560424839}
   - {fileID: 963714673}
-  lightSource: {fileID: 2022161900}
-  currentPlayer: []
+  lightSource: {fileID: 2022161899}
   smooth: 10
   health: 30
   baseMoveSpeed: 1

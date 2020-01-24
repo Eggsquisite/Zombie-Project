@@ -45,12 +45,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   humanPlayer: {fileID: 0}
   shadowPlayer: {fileID: 0}
+  shadowPrefab: {fileID: 2468048932313206511, guid: fe7cf2c83ac6ab444a1f8a9548dd5c1a,
+    type: 3}
   switchCooldown: 2
-  switchTimer: 0
+  switchTimer: 2
   humanLight: {fileID: 0}
   shadowLight: {fileID: 0}
   slowDownFactor: 0.1
   slowDownTimer: 0
-  slowDownLength: 2
+  slowDownLength: 1.5
   cameraTransition: 0.5
+  smoothTime: 50
   myCamera: {fileID: 0}

@@ -6,8 +6,9 @@ using UnityEngine.Experimental.Rendering.LWRP;
 public class SwitchController : MonoBehaviour
 {
     [Header("Players")]
-    [SerializeField] Player humanPlayer;
-    [SerializeField] Player shadowPlayer;
+    [SerializeField] GameObject humanPlayer = null;
+    [SerializeField] GameObject shadowPlayer = null;
+    [SerializeField] GameObject shadowPrefab = null;
     [SerializeField] float switchCooldown = 2f;
     [SerializeField] float switchTimer = 0f;
 
@@ -20,18 +21,23 @@ public class SwitchController : MonoBehaviour
     [SerializeField] float slowDownTimer = 0f;
     [SerializeField] float slowDownLength = 2f;
     [SerializeField] float cameraTransition = 0.5f;
+    [SerializeField] float smoothTime = 50f;
 
     [SerializeField] CameraTrack myCamera;
 
     bool startActive = true;
+    Player myHuman, myShadow;
 
     // Start is called before the first frame update
     void Start()
     {
-        humanPlayer.SetActive(startActive);
-        shadowPlayer.SetActive(!startActive);
+        myHuman = humanPlayer.GetComponent<Player>();
+        myShadow = shadowPlayer.GetComponent<Player>();
 
-        myCamera.UpdatePlayer(humanPlayer.transform);
+        myHuman.SetActive(startActive);
+        myShadow.SetActive(!startActive);
+
+        myCamera.UpdatePlayer(myHuman.transform);
 
         shadowLight.enabled = !startActive;
         humanLight.enabled = startActive;
@@ -61,24 +67,31 @@ public class SwitchController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && switchTimer >= switchCooldown)
         {
+            if (myShadow.GetShadowDeath() == true)
+            {
+                myShadow.transform.position = new Vector3(myHuman.transform.position.x, myHuman.transform.position.y, myHuman.transform.position.z);
+                myShadow.SetShadowDeath(false);
+            }
+
             switchTimer = 0f;
             slowDownTimer = 0f;
 
             StartCoroutine(DoSlowMotion());
 
             startActive = !startActive;
-            humanPlayer.SetActive(startActive);
-            shadowPlayer.SetActive(!startActive);
+            myHuman.SetActive(startActive);
+            myShadow.SetActive(!startActive);
+            myCamera.SetSmoothTime(smoothTime);
 
             if (startActive)
             {
-                myCamera.UpdatePlayer(humanPlayer.transform);
+                myCamera.UpdatePlayer(myHuman.transform);
                 shadowLight.enabled = false;
                 humanLight.enabled = true;
             }
             else if (!startActive)
             {
-                myCamera.UpdatePlayer(shadowPlayer.transform);
+                myCamera.UpdatePlayer(myShadow.transform);
                 humanLight.enabled = false;
                 shadowLight.enabled = true;
             }
@@ -94,6 +107,7 @@ public class SwitchController : MonoBehaviour
         yield return new WaitForSeconds(cameraTransition);
 
         Time.fixedDeltaTime = oldDeltaTime;
+        myCamera.ResetSmoothTime();
         Debug.Log("New delta time: " + Time.deltaTime);
     }
 }

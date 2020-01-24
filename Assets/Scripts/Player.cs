@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     [SerializeField] AudioClip deathSFX = null;
     [SerializeField] List<AudioClip> hurtSFX = null;
     [SerializeField] float durationOfDeath = 3f;
-    [Range(0,1)] [SerializeField] float hurtVolume = 1f;
+    [Range(0, 1)] [SerializeField] float hurtVolume = 1f;
     private int facing = -1;
 
     [Header("Sprite Blink")]
@@ -45,6 +45,7 @@ public class Player : MonoBehaviour
     private bool playerHit = false;
     public bool playerActive = false;
     private bool shadow = false;
+    private bool shadowDeath = false;
     private float updatedMoveSpeed, rotation, angle;
 
     Vector2 movement, savedVelocity;    // stores x (horiz) and y (vert)
@@ -61,7 +62,7 @@ public class Player : MonoBehaviour
     }
 
     public enum Facing
-    { 
+    {
         Left,
         Right,
         Down,
@@ -86,6 +87,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        Animate();
         if (playerActive)
         {
             Move();
@@ -134,16 +136,19 @@ public class Player : MonoBehaviour
 
         if (aiming || Input.GetButton("Fire2") && !shadow)
             updatedMoveSpeed = baseMoveSpeed * 0f;
-        else 
+        else
             updatedMoveSpeed = baseMoveSpeed;
 
         anim.SetFloat("Base Speed", updatedMoveSpeed);
-        anim.SetFloat("Speed", movement.sqrMagnitude);      // sqrMag will always be pos, optimal since sqr root is unneeded
+        anim.SetFloat("Speed", movement.sqrMagnitude);      // sqrMag will always be pos, optimal since sqr root is unneeded 
+    }
 
+    private void Animate()
+    {
         if (movement.y >= 1)
         {
             // facing/moving UP
-            if (aiming && facing >= 0) 
+            if (aiming && facing >= 0)
             {
                 facing = 0;
             }
@@ -155,7 +160,7 @@ public class Player : MonoBehaviour
         else if (movement.y < 0)
         {
             // facing/moving DOWN
-            if (aiming && facing >= 0) 
+            if (aiming && facing >= 0)
             {
                 facing = 1;
             }
@@ -250,8 +255,8 @@ public class Player : MonoBehaviour
 
             Instantiate(
                 projectile,
-                //firePoints[facing].position,
-                transform.position,
+                firePoints[facing].position,
+                //transform.position,
                 Quaternion.identity);
 
             facing = -1;
@@ -275,8 +280,10 @@ public class Player : MonoBehaviour
             playerHit = true;
             AudioSource.PlayClipAtPoint(hurtSFX[Random.Range(0, hurtSFX.Count)], Camera.main.transform.position, hurtVolume);
         }
-        else
+        else if (health <= 0 && !shadow)
             Death();
+        else if (health <= 0 && shadow && alive)
+            ShadowDeath();
     }
 
     private void GracePeriod()
@@ -313,6 +320,32 @@ public class Player : MonoBehaviour
         GameObject explosion = Instantiate(deathVFX, transform.position, Quaternion.Euler(0f, 180f, 0f));
         Destroy(explosion, durationOfDeath);
         //FindObjectOfType<Level>().LoadGameOver();
+    }
+
+    private void ShadowDeath()
+    {
+        alive = false;
+        if (aud != null)
+            aud.Stop();
+        AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, hurtVolume);
+        anim.SetTrigger("Shadow Death");
+        shadowDeath = true;
+        //FindObjectOfType<Level>().LoadGameOver();
+    }
+
+    public bool GetShadowDeath()
+    {
+        return shadowDeath;
+    }
+
+    public void SetShadowDeath(bool deathStatus)
+    {
+        shadowDeath = deathStatus;
+
+        if (shadowDeath == true)
+        {
+            anim.SetTrigger("Shadow Death");
+        }
     }
 
     private void Movement()
