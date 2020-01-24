@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.LWRP;
 
 
 public class Player : MonoBehaviour
@@ -8,7 +9,7 @@ public class Player : MonoBehaviour
     [Header("Misc")]
     [SerializeField] GameObject projectile = null;
     [SerializeField] List<Transform> firePoints = null;
-    [SerializeField] Transform lightSource = null;
+    [SerializeField] GameObject lightSource = null;
     [SerializeField] float smooth = 5f;
 
     [Header("Player Stats")]
@@ -43,6 +44,7 @@ public class Player : MonoBehaviour
     private bool aiming = false;
     private bool playerHit = false;
     public bool playerActive = false;
+    private bool shadow = false;
     private float updatedMoveSpeed, rotation, angle;
 
     Vector2 movement, savedVelocity;    // stores x (horiz) and y (vert)
@@ -73,6 +75,11 @@ public class Player : MonoBehaviour
         aud = FindObjectOfType<AudioSource>();
         sp = GetComponent<SpriteRenderer>();
 
+        if (gameObject.name.Contains("Shadow"))
+            shadow = true;
+        else if (gameObject.name.Contains("Human"))
+            shadow = false;
+
         anim.SetFloat("Horizontal", 1);
         updatedMoveSpeed = baseMoveSpeed;
     }
@@ -84,6 +91,10 @@ public class Player : MonoBehaviour
             Move();
             ReadyFire();
             Fire();
+        }
+        else if (!playerActive)
+        {
+            StopMovement();
         }
 
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -99,17 +110,16 @@ public class Player : MonoBehaviour
         if (dashState != DashState.Dashing)
             Movement();
 
-        Dash();
-        FindAngle();
+        if (playerActive)
+            FindAngle();
+
+        if (shadow && playerActive)
+            Dash();
     }
 
-    private void SwitchPlayer()
+    public void SetActive(bool active)
     {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            var players = FindObjectsOfType<Player>();
-            Debug.Log(players + " : " + players.Length);
-        }
+        playerActive = active;
     }
 
     private void Move()
@@ -177,9 +187,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void StopMovement()
+    {
+        Debug.Log("Stopping movement for: " + gameObject.name);
+        rb.velocity = new Vector3(0f, 0f, 0f);
+    }
+
     private void ReadyFire()
     {
-        if (alive)
+        if (alive && !shadow)
         {
             if (Input.GetButton("Fire2") && aiming == false)
             {
@@ -208,7 +224,20 @@ public class Player : MonoBehaviour
         Quaternion target = Quaternion.Euler(0, 0, angle);
 
         if (lightSource != null)
-            lightSource.rotation = Quaternion.Slerp(lightSource.rotation, target, Time.deltaTime * smooth);
+            lightSource.transform.rotation = Quaternion.Slerp(lightSource.transform.rotation, target, Time.deltaTime * smooth);
+    }
+
+    private void LightControl()
+    {
+        var globalLight = lightSource.GetComponent<Light2D>();
+        if (shadow && playerActive)
+        {
+            globalLight.enabled = true;
+        }
+        else if (shadow && !playerActive)
+        {
+            globalLight.enabled = false;    
+        }
     }
 
     public void Fire()
@@ -302,38 +331,37 @@ public class Player : MonoBehaviour
 
     private void Dash()
     {
+            switch (dashState)
+            {
+                case DashState.Ready:
+                    var isDashKeyDown = Input.GetKeyDown(KeyCode.Mouse1);
+                    if (isDashKeyDown)
+                    {
+                        savedVelocity = rb.velocity;
 
-        switch (dashState)
-        {
-            case DashState.Ready:
-                var isDashKeyDown = Input.GetKeyDown(KeyCode.LeftShift);
-                if (isDashKeyDown)
-                {
-                    savedVelocity = rb.velocity;
-          
-                    rb.velocity = new Vector2(movement.x * dashSpeed, movement.y * dashSpeed);
-                    dashState = DashState.Dashing;
-                }
-                break;
+                        rb.velocity = new Vector2(movement.x * dashSpeed, movement.y * dashSpeed);
+                        dashState = DashState.Dashing;
+                    }
+                    break;
 
-            case DashState.Dashing:
-                dashing += Time.deltaTime * 3;
-                if (dashing >= dashTimer)
-                {
-                    dashing = dashCooldown;
-                    rb.velocity = savedVelocity;
-                    dashState = DashState.Cooldown;
-                }
-                break;
+                case DashState.Dashing:
+                    dashing += Time.deltaTime * 3;
+                    if (dashing >= dashTimer)
+                    {
+                        dashing = dashCooldown;
+                        rb.velocity = savedVelocity;
+                        dashState = DashState.Cooldown;
+                    }
+                    break;
 
-            case DashState.Cooldown:
-                dashing -= Time.deltaTime;
-                if (dashing <= 0)
-                {
-                    dashing = 0;
-                    dashState = DashState.Ready;
-                }
-                break;
-        }
+                case DashState.Cooldown:
+                    dashing -= Time.deltaTime;
+                    if (dashing <= 0)
+                    {
+                        dashing = 0;
+                        dashState = DashState.Ready;
+                    }
+                    break;
+            }
     }
 }
