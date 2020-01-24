@@ -89,8 +89,12 @@ public class Player : MonoBehaviour
         if (playerActive)
         {
             Move();
-            ReadyFire();
-            Fire();
+
+            if (!shadow)
+            {
+                ReadyFire();
+                Fire();
+            }
         }
         else if (!playerActive)
         {
@@ -128,7 +132,7 @@ public class Player : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");        // value btwn -1 and 1
         movement.y = Input.GetAxisRaw("Vertical");          // works default with WASD and arrow keys
 
-        if (aiming || Input.GetButton("Fire2"))
+        if (aiming || Input.GetButton("Fire2") && !shadow)
             updatedMoveSpeed = baseMoveSpeed * 0f;
         else 
             updatedMoveSpeed = baseMoveSpeed;

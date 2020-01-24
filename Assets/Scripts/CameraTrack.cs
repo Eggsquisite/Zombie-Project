@@ -24,6 +24,11 @@ public class CameraTrack : MonoBehaviour
         
     }
 
+    public void UpdatePlayer(Transform player)
+    {
+        target = player.transform;
+    }
+
     void FixedUpdate()
     {
         if (target != null)
@@ -31,7 +36,7 @@ public class CameraTrack : MonoBehaviour
             targetPos = target.position;            // target position
             targetPos.z = transform.position.z;     // align camera and targets z position
 
-            transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, .5f * Time.deltaTime);
+            transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime * Time.deltaTime);
         }
     }
 }

@@ -15,6 +15,8 @@ public class SwitchPlayer : MonoBehaviour
     [SerializeField] Light2D humanLight;
     [SerializeField] Light2D shadowLight;
 
+    [SerializeField] CameraTrack myCamera;
+
     bool startActive = true;
 
     // Start is called before the first frame update
@@ -22,6 +24,8 @@ public class SwitchPlayer : MonoBehaviour
     {
         humanPlayer.SetActive(startActive);
         shadowPlayer.SetActive(!startActive);
+
+        myCamera.UpdatePlayer(humanPlayer.transform);
 
         shadowLight.enabled = !startActive;
         humanLight.enabled = startActive;
@@ -46,8 +50,18 @@ public class SwitchPlayer : MonoBehaviour
             humanPlayer.SetActive(startActive);
             shadowPlayer.SetActive(!startActive);
 
-            humanLight.enabled = startActive;
-            shadowLight.enabled = !startActive;
+            if (startActive)
+            {
+                myCamera.UpdatePlayer(humanPlayer.transform);
+                shadowLight.enabled = false;
+                humanLight.enabled = true;
+            }
+            else if (!startActive)
+            {
+                myCamera.UpdatePlayer(shadowPlayer.transform);
+                humanLight.enabled = false;
+                shadowLight.enabled = true;
+            }
         }
     }
 }
