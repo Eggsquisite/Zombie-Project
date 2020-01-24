@@ -293,7 +293,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2022161900}
   - component: {fileID: 2022161901}
-  - component: {fileID: 2022161902}
   - component: {fileID: 2022161903}
   m_Layer: 13
   m_Name: Directional Light
@@ -355,18 +354,6 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
---- !u!114 &2022161902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2022161899}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 472bbd0b49735ec419e0c1a7de3bf1a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &2022161903
 Rigidbody2D:
   serializedVersion: 4
@@ -403,7 +390,7 @@ GameObject:
   - component: {fileID: 1271564909439953940}
   - component: {fileID: 1271564909439953939}
   m_Layer: 13
-  m_Name: Player
+  m_Name: Human Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -518,6 +505,9 @@ MonoBehaviour:
   - {fileID: 1472619892}
   - {fileID: 560424839}
   - {fileID: 963714673}
+  lightSource: {fileID: 2022161900}
+  currentPlayer: []
+  smooth: 10
   health: 30
   baseMoveSpeed: 1
   speedMultiplier: 5
@@ -530,13 +520,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: be8f35d0ffa544fde837064d01ad7063, type: 3}
   durationOfDeath: 7
   hurtVolume: 1
-  facing: -1
   spriteBlinkMiniDuration: 0.1
   spriteBlinkTotalDuration: 1.6
   dashTimer: 0.25
   dashCooldown: 3
   dashSpeed: 25
   dashing: 0
+  playerActive: 0
   dashState: 0
   faceState: 0
 --- !u!95 &1271564909439953940

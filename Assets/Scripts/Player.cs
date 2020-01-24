@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
     private bool alive = true;
     private bool aiming = false;
     private bool playerHit = false;
+    public bool playerActive = false;
     private float updatedMoveSpeed, rotation, angle;
 
     Vector2 movement, savedVelocity;    // stores x (horiz) and y (vert)
@@ -74,14 +75,16 @@ public class Player : MonoBehaviour
 
         anim.SetFloat("Horizontal", 1);
         updatedMoveSpeed = baseMoveSpeed;
-        
     }
 
     void Update()
     {
-        Move();
-        ReadyFire();
-        Fire();
+        if (playerActive)
+        {
+            Move();
+            ReadyFire();
+            Fire();
+        }
 
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -98,6 +101,15 @@ public class Player : MonoBehaviour
 
         Dash();
         FindAngle();
+    }
+
+    private void SwitchPlayer()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            var players = FindObjectsOfType<Player>();
+            Debug.Log(players + " : " + players.Length);
+        }
     }
 
     private void Move()
@@ -194,7 +206,9 @@ public class Player : MonoBehaviour
         Vector2 lookDir = mousePos - rb.position;
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
         Quaternion target = Quaternion.Euler(0, 0, angle);
-        lightSource.rotation = Quaternion.Slerp(lightSource.rotation, target, Time.deltaTime * smooth);
+
+        if (lightSource != null)
+            lightSource.rotation = Quaternion.Slerp(lightSource.rotation, target, Time.deltaTime * smooth);
     }
 
     public void Fire()
@@ -247,8 +261,6 @@ public class Player : MonoBehaviour
 
     private void GracePeriod()
     {
-        Debug.Log("Hit");
-
         spriteBlinkTotalTimer += Time.deltaTime;
         if (spriteBlinkTotalTimer >= spriteBlinkTotalDuration)
         {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraTrack : MonoBehaviour
 {
 
-    [SerializeField] Transform target;
+    Transform target;
 
     Vector3 velocity = Vector3.zero;        // zero's out velocity
     Vector3 targetPos;
@@ -16,6 +16,7 @@ public class CameraTrack : MonoBehaviour
     private void Start()
     {
         SetUpMoveBoundaries();
+        target = FindObjectOfType<Player>().transform;
     }
 
     private void SetUpMoveBoundaries()
